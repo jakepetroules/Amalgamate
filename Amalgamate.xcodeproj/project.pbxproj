@@ -1,0 +1,937 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		14652FA919AA809600959E44 /* libamalgamate.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		14652FAA19AA815000959E44 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
+		14652FAC19AA816100959E44 /* libamalgamate.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		14652FAF19AA82FC00959E44 /* dsrecord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14652FAD19AA82FC00959E44 /* dsrecord.cpp */; };
+		14652FB019AA82FC00959E44 /* dsrecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FAE19AA82FC00959E44 /* dsrecord.h */; };
+		14652FB219AA848100959E44 /* amgexport.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FB119AA848100959E44 /* amgexport.h */; };
+		14652FB419AA8ACA00959E44 /* amg.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FB319AA8ACA00959E44 /* amg.h */; };
+		14DBDED919299FA9008758F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDED819299FA9008758F2 /* Cocoa.framework */; };
+		14DBDEE319299FA9008758F2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14DBDEE119299FA9008758F2 /* InfoPlist.strings */; };
+		14DBDEE519299FA9008758F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDEE419299FA9008758F2 /* main.m */; };
+		14DBDEE919299FA9008758F2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 14DBDEE719299FA9008758F2 /* Credits.rtf */; };
+		14DBDEEC19299FA9008758F2 /* AMGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDEEB19299FA9008758F2 /* AMGDocument.m */; };
+		14DBDEEF19299FA9008758F2 /* AMGDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14DBDEED19299FA9008758F2 /* AMGDocument.xib */; };
+		14DBDEF219299FA9008758F2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14DBDEF019299FA9008758F2 /* MainMenu.xib */; };
+		14DBDEF419299FA9008758F2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBDEF319299FA9008758F2 /* Images.xcassets */; };
+		14DBDEFB19299FA9008758F2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDEFA19299FA9008758F2 /* XCTest.framework */; };
+		14DBDEFC19299FAA008758F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDED819299FA9008758F2 /* Cocoa.framework */; };
+		14DBDF0419299FAA008758F2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14DBDF0219299FAA008758F2 /* InfoPlist.strings */; };
+		14DBDF0619299FAA008758F2 /* AmalgamateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF0519299FAA008758F2 /* AmalgamateTests.m */; };
+		14DBDF1619299FE6008758F2 /* amalgamate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1519299FE6008758F2 /* amalgamate.1 */; };
+		14DBDF221929A10F008758F2 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
+		14DBDF271929A122008758F2 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
+		14DBDF2A1929A211008758F2 /* dsstore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF291929A211008758F2 /* dsstore.cpp */; };
+		14DBDF2C1929A21F008758F2 /* dsstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 14DBDF2B1929A21F008758F2 /* dsstore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14DBDF2E192A8043008758F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF2D192A8043008758F2 /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		14DBDEFD19299FAA008758F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14DBDECB19299F4D008758F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 14DBDED419299FA9008758F2;
+			remoteInfo = Amalgamate;
+		};
+		14DBDF231929A117008758F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14DBDECB19299F4D008758F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 14DBDF1D1929A032008758F2;
+			remoteInfo = libamalgamate;
+		};
+		14DBDF251929A11C008758F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14DBDECB19299F4D008758F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 14DBDF1D1929A032008758F2;
+			remoteInfo = libamalgamate;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		14652FA819AA808400959E44 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				14652FA919AA809600959E44 /* libamalgamate.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14652FAB19AA815600959E44 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				14652FAC19AA816100959E44 /* libamalgamate.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDF0F19299FE4008758F2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				14DBDF1619299FE6008758F2 /* amalgamate.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		14652FAD19AA82FC00959E44 /* dsrecord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsrecord.cpp; sourceTree = "<group>"; };
+		14652FAE19AA82FC00959E44 /* dsrecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsrecord.h; sourceTree = "<group>"; };
+		14652FB119AA848100959E44 /* amgexport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amgexport.h; sourceTree = "<group>"; };
+		14652FB319AA8ACA00959E44 /* amg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amg.h; sourceTree = "<group>"; };
+		14652FB519AA9B0A00959E44 /* dsio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dsio.h; sourceTree = "<group>"; };
+		14DBDED519299FA9008758F2 /* Amalgamate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalgamate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		14DBDED819299FA9008758F2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		14DBDEDB19299FA9008758F2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		14DBDEDC19299FA9008758F2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		14DBDEDD19299FA9008758F2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		14DBDEE019299FA9008758F2 /* Amalgamate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amalgamate-Info.plist"; sourceTree = "<group>"; };
+		14DBDEE219299FA9008758F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		14DBDEE419299FA9008758F2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		14DBDEE619299FA9008758F2 /* Amalgamate-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Amalgamate-Prefix.pch"; sourceTree = "<group>"; };
+		14DBDEE819299FA9008758F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		14DBDEEA19299FA9008758F2 /* AMGDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMGDocument.h; sourceTree = "<group>"; };
+		14DBDEEB19299FA9008758F2 /* AMGDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMGDocument.m; sourceTree = "<group>"; };
+		14DBDEEE19299FA9008758F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMGDocument.xib; sourceTree = "<group>"; };
+		14DBDEF119299FA9008758F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		14DBDEF319299FA9008758F2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		14DBDEF919299FA9008758F2 /* AmalgamateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmalgamateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14DBDEFA19299FA9008758F2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		14DBDF0119299FAA008758F2 /* AmalgamateTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AmalgamateTests-Info.plist"; sourceTree = "<group>"; };
+		14DBDF0319299FAA008758F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		14DBDF0519299FAA008758F2 /* AmalgamateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AmalgamateTests.m; sourceTree = "<group>"; };
+		14DBDF1119299FE5008758F2 /* amalgamate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = amalgamate; sourceTree = BUILT_PRODUCTS_DIR; };
+		14DBDF1519299FE6008758F2 /* amalgamate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = amalgamate.1; sourceTree = "<group>"; };
+		14DBDF1E1929A032008758F2 /* libamalgamate.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libamalgamate.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		14DBDF291929A211008758F2 /* dsstore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsstore.cpp; sourceTree = "<group>"; };
+		14DBDF2B1929A21F008758F2 /* dsstore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsstore.h; sourceTree = "<group>"; };
+		14DBDF2D192A8043008758F2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		14E8ED3219AAC7ED00E56E54 /* AmalgamateTests.DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmalgamateTests.DS_Store; sourceTree = "<group>"; };
+		14E8ED3319AAC7ED00E56E54 /* Silverlock2.DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = Silverlock2.DS_Store; sourceTree = "<group>"; };
+		14E8ED3419AB01DC00E56E54 /* Xcode6b6.DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = Xcode6b6.DS_Store; sourceTree = "<group>"; };
+		14E8ED3519AB025A00E56E54 /* Firefox31.DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = Firefox31.DS_Store; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		14DBDED219299FA9008758F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDED919299FA9008758F2 /* Cocoa.framework in Frameworks */,
+				14DBDF271929A122008758F2 /* libamalgamate.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDEF619299FA9008758F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDEFC19299FAA008758F2 /* Cocoa.framework in Frameworks */,
+				14DBDEFB19299FA9008758F2 /* XCTest.framework in Frameworks */,
+				14652FAA19AA815000959E44 /* libamalgamate.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDF0E19299FE4008758F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDF221929A10F008758F2 /* libamalgamate.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDF1B1929A032008758F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		14DBDECA19299F4D008758F2 = {
+			isa = PBXGroup;
+			children = (
+				14DBDEDE19299FA9008758F2 /* Application */,
+				14DBDF1219299FE5008758F2 /* Command Line Tool */,
+				14DBDF281929A13C008758F2 /* Library */,
+				14DBDEFF19299FAA008758F2 /* AmalgamateTests */,
+				14DBDED719299FA9008758F2 /* Frameworks */,
+				14DBDED619299FA9008758F2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		14DBDED619299FA9008758F2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDED519299FA9008758F2 /* Amalgamate.app */,
+				14DBDEF919299FA9008758F2 /* AmalgamateTests.xctest */,
+				14DBDF1119299FE5008758F2 /* amalgamate */,
+				14DBDF1E1929A032008758F2 /* libamalgamate.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		14DBDED719299FA9008758F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDED819299FA9008758F2 /* Cocoa.framework */,
+				14DBDEFA19299FA9008758F2 /* XCTest.framework */,
+				14DBDEDA19299FA9008758F2 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		14DBDEDA19299FA9008758F2 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDEDB19299FA9008758F2 /* AppKit.framework */,
+				14DBDEDC19299FA9008758F2 /* CoreData.framework */,
+				14DBDEDD19299FA9008758F2 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		14DBDEDE19299FA9008758F2 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDEEA19299FA9008758F2 /* AMGDocument.h */,
+				14DBDEEB19299FA9008758F2 /* AMGDocument.m */,
+				14DBDEED19299FA9008758F2 /* AMGDocument.xib */,
+				14DBDEF019299FA9008758F2 /* MainMenu.xib */,
+				14DBDEF319299FA9008758F2 /* Images.xcassets */,
+				14DBDEDF19299FA9008758F2 /* Supporting Files */,
+			);
+			name = Application;
+			path = Amalgamate;
+			sourceTree = "<group>";
+		};
+		14DBDEDF19299FA9008758F2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDEE019299FA9008758F2 /* Amalgamate-Info.plist */,
+				14DBDEE119299FA9008758F2 /* InfoPlist.strings */,
+				14DBDEE419299FA9008758F2 /* main.m */,
+				14DBDEE619299FA9008758F2 /* Amalgamate-Prefix.pch */,
+				14DBDEE719299FA9008758F2 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		14DBDEFF19299FAA008758F2 /* AmalgamateTests */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDF0519299FAA008758F2 /* AmalgamateTests.m */,
+				14E8ED3119AAC7ED00E56E54 /* TestData */,
+				14DBDF0019299FAA008758F2 /* Supporting Files */,
+			);
+			path = AmalgamateTests;
+			sourceTree = "<group>";
+		};
+		14DBDF0019299FAA008758F2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDF0119299FAA008758F2 /* AmalgamateTests-Info.plist */,
+				14DBDF0219299FAA008758F2 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		14DBDF1219299FE5008758F2 /* Command Line Tool */ = {
+			isa = PBXGroup;
+			children = (
+				14DBDF2D192A8043008758F2 /* main.m */,
+				14DBDF1519299FE6008758F2 /* amalgamate.1 */,
+			);
+			name = "Command Line Tool";
+			path = cli;
+			sourceTree = "<group>";
+		};
+		14DBDF281929A13C008758F2 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				14652FB319AA8ACA00959E44 /* amg.h */,
+				14652FB119AA848100959E44 /* amgexport.h */,
+				14652FAD19AA82FC00959E44 /* dsrecord.cpp */,
+				14652FAE19AA82FC00959E44 /* dsrecord.h */,
+				14DBDF291929A211008758F2 /* dsstore.cpp */,
+				14DBDF2B1929A21F008758F2 /* dsstore.h */,
+				14652FB519AA9B0A00959E44 /* dsio.h */,
+			);
+			name = Library;
+			path = libamalgamate;
+			sourceTree = "<group>";
+		};
+		14E8ED3119AAC7ED00E56E54 /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				14E8ED3219AAC7ED00E56E54 /* AmalgamateTests.DS_Store */,
+				14E8ED3519AB025A00E56E54 /* Firefox31.DS_Store */,
+				14E8ED3319AAC7ED00E56E54 /* Silverlock2.DS_Store */,
+				14E8ED3419AB01DC00E56E54 /* Xcode6b6.DS_Store */,
+			);
+			path = TestData;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		14DBDF1C1929A032008758F2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14652FB419AA8ACA00959E44 /* amg.h in Headers */,
+				14652FB019AA82FC00959E44 /* dsrecord.h in Headers */,
+				14DBDF2C1929A21F008758F2 /* dsstore.h in Headers */,
+				14652FB219AA848100959E44 /* amgexport.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		14DBDED419299FA9008758F2 /* Amalgamate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14DBDF0719299FAA008758F2 /* Build configuration list for PBXNativeTarget "Amalgamate" */;
+			buildPhases = (
+				14DBDED119299FA9008758F2 /* Sources */,
+				14DBDED219299FA9008758F2 /* Frameworks */,
+				14DBDED319299FA9008758F2 /* Resources */,
+				14652FA819AA808400959E44 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				14DBDF261929A11C008758F2 /* PBXTargetDependency */,
+			);
+			name = Amalgamate;
+			productName = Amalgamate;
+			productReference = 14DBDED519299FA9008758F2 /* Amalgamate.app */;
+			productType = "com.apple.product-type.application";
+		};
+		14DBDEF819299FA9008758F2 /* AmalgamateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14DBDF0A19299FAA008758F2 /* Build configuration list for PBXNativeTarget "AmalgamateTests" */;
+			buildPhases = (
+				14DBDEF519299FA9008758F2 /* Sources */,
+				14DBDEF619299FA9008758F2 /* Frameworks */,
+				14DBDEF719299FA9008758F2 /* Resources */,
+				14652FAB19AA815600959E44 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				14DBDEFE19299FAA008758F2 /* PBXTargetDependency */,
+			);
+			name = AmalgamateTests;
+			productName = AmalgamateTests;
+			productReference = 14DBDEF919299FA9008758F2 /* AmalgamateTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		14DBDF1019299FE4008758F2 /* Amalgamate CLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14DBDF1719299FE6008758F2 /* Build configuration list for PBXNativeTarget "Amalgamate CLI" */;
+			buildPhases = (
+				14DBDF0D19299FE4008758F2 /* Sources */,
+				14DBDF0E19299FE4008758F2 /* Frameworks */,
+				14DBDF0F19299FE4008758F2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				14DBDF241929A117008758F2 /* PBXTargetDependency */,
+			);
+			name = "Amalgamate CLI";
+			productName = "Amalgamate CLI";
+			productReference = 14DBDF1119299FE5008758F2 /* amalgamate */;
+			productType = "com.apple.product-type.tool";
+		};
+		14DBDF1D1929A032008758F2 /* libamalgamate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14DBDF1F1929A032008758F2 /* Build configuration list for PBXNativeTarget "libamalgamate" */;
+			buildPhases = (
+				14DBDF1A1929A032008758F2 /* Sources */,
+				14DBDF1B1929A032008758F2 /* Frameworks */,
+				14DBDF1C1929A032008758F2 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libamalgamate;
+			productName = libamalgamate;
+			productReference = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		14DBDECB19299F4D008758F2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					14DBDEF819299FA9008758F2 = {
+						TestTargetID = 14DBDED419299FA9008758F2;
+					};
+				};
+			};
+			buildConfigurationList = 14DBDECE19299F4D008758F2 /* Build configuration list for PBXProject "Amalgamate" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 14DBDECA19299F4D008758F2;
+			productRefGroup = 14DBDED619299FA9008758F2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				14DBDED419299FA9008758F2 /* Amalgamate */,
+				14DBDEF819299FA9008758F2 /* AmalgamateTests */,
+				14DBDF1019299FE4008758F2 /* Amalgamate CLI */,
+				14DBDF1D1929A032008758F2 /* libamalgamate */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		14DBDED319299FA9008758F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDEE319299FA9008758F2 /* InfoPlist.strings in Resources */,
+				14DBDEF419299FA9008758F2 /* Images.xcassets in Resources */,
+				14DBDEE919299FA9008758F2 /* Credits.rtf in Resources */,
+				14DBDEEF19299FA9008758F2 /* AMGDocument.xib in Resources */,
+				14DBDEF219299FA9008758F2 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDEF719299FA9008758F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDF0419299FAA008758F2 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		14DBDED119299FA9008758F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDEEC19299FA9008758F2 /* AMGDocument.m in Sources */,
+				14DBDEE519299FA9008758F2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDEF519299FA9008758F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDF0619299FAA008758F2 /* AmalgamateTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDF0D19299FE4008758F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDF2E192A8043008758F2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14DBDF1A1929A032008758F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14DBDF2A1929A211008758F2 /* dsstore.cpp in Sources */,
+				14652FAF19AA82FC00959E44 /* dsrecord.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		14DBDEFE19299FAA008758F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 14DBDED419299FA9008758F2 /* Amalgamate */;
+			targetProxy = 14DBDEFD19299FAA008758F2 /* PBXContainerItemProxy */;
+		};
+		14DBDF241929A117008758F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 14DBDF1D1929A032008758F2 /* libamalgamate */;
+			targetProxy = 14DBDF231929A117008758F2 /* PBXContainerItemProxy */;
+		};
+		14DBDF261929A11C008758F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 14DBDF1D1929A032008758F2 /* libamalgamate */;
+			targetProxy = 14DBDF251929A11C008758F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		14DBDEE119299FA9008758F2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				14DBDEE219299FA9008758F2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		14DBDEE719299FA9008758F2 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				14DBDEE819299FA9008758F2 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		14DBDEED19299FA9008758F2 /* AMGDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				14DBDEEE19299FA9008758F2 /* Base */,
+			);
+			name = AMGDocument.xib;
+			sourceTree = "<group>";
+		};
+		14DBDEF019299FA9008758F2 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				14DBDEF119299FA9008758F2 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		14DBDF0219299FAA008758F2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				14DBDF0319299FAA008758F2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		14DBDECF19299F4D008758F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				MACOSX_DEPLOYMENT_TARGET = "";
+			};
+			name = Debug;
+		};
+		14DBDED019299F4D008758F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				MACOSX_DEPLOYMENT_TARGET = "";
+			};
+			name = Release;
+		};
+		14DBDF0819299FAA008758F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Amalgamate/Amalgamate-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Amalgamate/Amalgamate-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		14DBDF0919299FAA008758F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Amalgamate/Amalgamate-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Amalgamate/Amalgamate-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		14DBDF0B19299FAA008758F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Amalgamate.app/Contents/MacOS/Amalgamate";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Amalgamate/Amalgamate-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "AmalgamateTests/AmalgamateTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		14DBDF0C19299FAA008758F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Amalgamate.app/Contents/MacOS/Amalgamate";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Amalgamate/Amalgamate-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "AmalgamateTests/AmalgamateTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		14DBDF1819299FE6008758F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @executable_path/";
+				PRODUCT_NAME = amalgamate;
+			};
+			name = Debug;
+		};
+		14DBDF1919299FE6008758F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @executable_path/";
+				PRODUCT_NAME = amalgamate;
+			};
+			name = Release;
+		};
+		14DBDF201929A032008758F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"BUILDING_LIBAMALGAMATE=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = amalgamate;
+			};
+			name = Debug;
+		};
+		14DBDF211929A032008758F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"BUILDING_LIBAMALGAMATE=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = amalgamate;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		14DBDECE19299F4D008758F2 /* Build configuration list for PBXProject "Amalgamate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14DBDECF19299F4D008758F2 /* Debug */,
+				14DBDED019299F4D008758F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		14DBDF0719299FAA008758F2 /* Build configuration list for PBXNativeTarget "Amalgamate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14DBDF0819299FAA008758F2 /* Debug */,
+				14DBDF0919299FAA008758F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		14DBDF0A19299FAA008758F2 /* Build configuration list for PBXNativeTarget "AmalgamateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14DBDF0B19299FAA008758F2 /* Debug */,
+				14DBDF0C19299FAA008758F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		14DBDF1719299FE6008758F2 /* Build configuration list for PBXNativeTarget "Amalgamate CLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14DBDF1819299FE6008758F2 /* Debug */,
+				14DBDF1919299FE6008758F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		14DBDF1F1929A032008758F2 /* Build configuration list for PBXNativeTarget "libamalgamate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14DBDF201929A032008758F2 /* Debug */,
+				14DBDF211929A032008758F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 14DBDECB19299F4D008758F2 /* Project object */;
+}
