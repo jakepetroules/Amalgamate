@@ -290,7 +290,7 @@ int ds_record_fread(ds_record_t *record, FILE *file)
         return 1;
     }
 
-    record->record_type = (ds_record_type)record_type;
+    record->record_type = static_cast<ds_record_type>(record_type);
 
     uint32_t data_type;
     if (fread_uint32_be(&data_type, file) != 1)
@@ -299,7 +299,7 @@ int ds_record_fread(ds_record_t *record, FILE *file)
         return 1;
     }
 
-    record->data_type = (ds_record_data_type)data_type;
+    record->data_type = static_cast<ds_record_data_type>(data_type);
 
     // If we encounter a seemingly incorrect data type for a particular record
     // type we'll just warn instead of failing because technically we can still
@@ -307,12 +307,15 @@ int ds_record_fread(ds_record_t *record, FILE *file)
     uint32_t data_type_n = htonl(record->data_type);
     uint32_t record_type_n = htonl(record->record_type);
     ds_record_data_type expected_data_type = ds_record_data_type_for_record_type(record->record_type);
-    uint32_t expected_data_type_n = htonl((uint32_t)expected_data_type);
+    uint32_t expected_data_type_n = htonl(static_cast<uint32_t>(expected_data_type));
     if (expected_data_type == 0) {
-        fprintf(stderr, "warning: unknown record type '%.4s'\n", (const char *)&record_type_n);
+        fprintf(stderr, "warning: unknown record type '%.4s'\n",
+                reinterpret_cast<const char *>(&record_type_n));
     } else if (expected_data_type != record->data_type) {
         fprintf(stderr, "warning: unexpected data type '%.4s' for record type '%.4s'; expected '%.4s'\n",
-                (const char *)&data_type_n, (const char *)&record_type_n, (const char *)&expected_data_type_n);
+                reinterpret_cast<const char *>(&data_type_n),
+                reinterpret_cast<const char *>(&record_type_n),
+                reinterpret_cast<const char *>(&expected_data_type_n));
     }
 
     uint32_t expected = 1; // expected elements (not bytes)
@@ -325,7 +328,7 @@ int ds_record_fread(ds_record_t *record, FILE *file)
             n = fread_uint64_be(&record->data.comp, file);
             break;
         case ds_record_data_type_dutc:
-            n = fread_uint64_be((uint64_t *)&record->data.dutc, file);
+            n = fread_uint64_be(reinterpret_cast<uint64_t *>(&record->data.dutc), file);
             break;
         case ds_record_data_type_long:
             n = fread_uint32_be(&record->data.llong, file);
@@ -342,13 +345,13 @@ int ds_record_fread(ds_record_t *record, FILE *file)
             // 'shor' is a 16-bit integer but physically stored as 32-bits for some reason
             if (c[0] != 0 || c[1] != 0)
                 fprintf(stderr, "warning: nonzero leading bytes in record data type '%.4s'\n",
-                        (const char *)&data_type_n);
+                        reinterpret_cast<const char *>(&data_type_n));
 
             n = fread_uint16_be(&record->data.shor, file);
             break;
         }
         case ds_record_data_type_type:
-            n = fread_uint32_be((uint32_t *)&record->data.type, file);
+            n = fread_uint32_be(reinterpret_cast<uint32_t *>(&record->data.type), file);
             break;
         case ds_record_data_type_blob:
         case ds_record_data_type_ustr:
@@ -381,7 +384,8 @@ int ds_record_fread(ds_record_t *record, FILE *file)
         }
         default:
             // We must fail on unknown data types because we cannot know their size
-            fprintf(stderr, "unknown record data type '%.4s'\n", (const char *)&data_type_n);
+            fprintf(stderr, "unknown record data type '%.4s'\n",
+                    reinterpret_cast<const char *>(&data_type_n));
             return 1;
     }
 
@@ -465,5 +469,5 @@ ds_record_data_type ds_record_data_type_for_record_type(ds_record_type record_ty
             return ds_record_data_type_type;
     }
     
-    return (ds_record_data_type)0;
+    return static_cast<ds_record_data_type>(0);
 }

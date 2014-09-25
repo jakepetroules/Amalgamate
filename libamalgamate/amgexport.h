@@ -25,7 +25,7 @@
 #ifndef AMALGAMATE_EXPORT_H
 #define AMALGAMATE_EXPORT_H
 
-#if BUILDING_LIBAMALGAMATE
+#if defined(BUILDING_LIBAMALGAMATE) && BUILDING_LIBAMALGAMATE
 #define AMG_EXPORT __attribute((visibility("default")))
 #else
 #define AMG_EXPORT

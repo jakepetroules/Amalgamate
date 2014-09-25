@@ -41,9 +41,9 @@
 
 #include "amgexport.h"
 #include <stddef.h>
-#import <Carbon/Carbon.h>
+#include <CoreServices/CoreServices.h>
 
-const FourCharCode kDSHeaderMagic = FOUR_CHAR_CODE('Bud1');
+static const FourCharCode kDSHeaderMagic = FOUR_CHAR_CODE('Bud1');
 
 typedef struct {
     uint32_t version;

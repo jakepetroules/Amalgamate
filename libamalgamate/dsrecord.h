@@ -34,7 +34,7 @@
 #include <vector>
 #endif
 
-#import <Carbon/Carbon.h> // HACK, for FOUR_CHAR_CODE
+#include <CoreServices/CoreServices.h> // HACK, for FOUR_CHAR_CODE
 
 /*!
  * A record gives attributes to the files in the containing directory of the
@@ -78,7 +78,7 @@ typedef enum {
     ds_record_type_ph1S = FOUR_CHAR_CODE('ph1S'),
     ds_record_type_pict = FOUR_CHAR_CODE('pict'),
     ds_record_type_vSrn = FOUR_CHAR_CODE('vSrn'),
-    ds_record_type_vstl = FOUR_CHAR_CODE('vstl'),
+    ds_record_type_vstl = FOUR_CHAR_CODE('vstl')
 } ds_record_type;
 
 /*!

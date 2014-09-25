@@ -28,8 +28,15 @@
 
 #include "amg.h"
 
-static inline uint32_t block_address_offset(uint32_t a) { return a & ~0x1f; }
-static inline uint32_t block_address_size(uint32_t a) { return pow(2, a & 0x1f); }
+static uint32_t pow_uint32_t(uint32_t x, uint32_t y)
+{
+    if (y == 0) return 1;
+    const uint32_t result = pow_uint32_t(x, y / 2);
+    return (y % 2 == 0) ? (result * result) : (x * result * result);
+}
+
+static inline uint32_t block_address_offset(uint32_t a) { return a & ~0x1fu; }
+static inline uint32_t block_address_size(uint32_t a) { return pow_uint32_t(2, a & 0x1f); }
 
 int amg_read_file(dsstore_header_t *header, FILE *file);
 int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
@@ -316,7 +323,7 @@ int amg_dump_file(const char *filename)
     }
 
     // Find the DSDB directory entry...
-    uint32_t header_block_number = -1;
+    uint32_t header_block_number = UINT32_MAX;
     const uint32_t dsdb = htonl(FOUR_CHAR_CODE('DSDB'));
     for (size_t i = 0; i < allocator_state.directory_count; ++i) {
         if (memcmp(allocator_state.directory_entries[i].bytes, &dsdb, sizeof(uint32_t)) == 0) {
@@ -325,7 +332,7 @@ int amg_dump_file(const char *filename)
         }
     }
 
-    if (header_block_number == -1) {
+    if (header_block_number == UINT32_MAX) {
         fprintf(stderr, "could not find the DSDB directory entry\n");
         ret = 1;
         goto cleanup;
@@ -536,7 +543,7 @@ int amg_dump_record(FILE *file)
 
     CFStringRef filename = CFStringCreateWithCharacters(kCFAllocatorDefault,
                                                               ds_record_get_filename_ptr(record),
-                                                              ds_record_get_filename_len(record));
+                                                              (CFIndex)ds_record_get_filename_len(record));
     fprintf(stdout, "filename: %s\n", CFStringGetCStringPtr(filename, kCFStringEncodingUTF8));
     CFRelease(filename);
 
@@ -620,7 +627,7 @@ int amg_dump_record(FILE *file)
                 if (plist_text_len) {
                     CFStringRef plist_text = CFStringCreateWithCharacters(kCFAllocatorDefault,
                                                                           ds_record_get_data_as_plist_ustr_ptr(record),
-                                                                          plist_text_len);
+                                                                          (CFIndex)plist_text_len);
                     fprintf(stdout, "%s", CFStringGetCStringPtr(plist_text, kCFStringEncodingUTF8));
                     CFRelease(plist_text);
                 } else {
@@ -657,7 +664,7 @@ int amg_dump_record(FILE *file)
         case ds_record_data_type_ustr: {
             CFStringRef recordfilename = CFStringCreateWithCharacters(kCFAllocatorDefault,
                                                                       ds_record_get_data_as_ustr_ptr(record),
-                                                                      ds_record_get_data_as_ustr_len(record));
+                                                                      (CFIndex)ds_record_get_data_as_ustr_len(record));
             fprintf(stdout, "%s", CFStringGetCStringPtr(recordfilename, kCFStringEncodingUTF8));
             CFRelease(recordfilename);
             break;
