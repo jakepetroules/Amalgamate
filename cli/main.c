@@ -565,7 +565,7 @@ int amg_dump_record(FILE *file)
 
             if (ds_record_get_type(record) == ds_record_type_BKGD) {
                 if (size == 12) {
-                    const uint32_t BKGDtype = ntohl(*(uint32_t *)data);
+                    const uint32_t BKGDtype = ntohl(*(const uint32_t *)data);
                     const uint32_t ClrB = FOUR_CHAR_CODE('ClrB'), PctB = FOUR_CHAR_CODE('PctB');
 
                     fprintf(stdout, "'%.4s' - ", data);
@@ -574,13 +574,13 @@ int amg_dump_record(FILE *file)
 
                     if (BKGDtype == ClrB) {
                         fprintf(stdout, "rgb(%hu, %hu, %hu) - ",
-                                ntohs(*(uint16_t *)(data + 0)),
-                                ntohs(*(uint16_t *)(data + 2)),
-                                ntohs(*(uint16_t *)(data + 4)));
+                                ntohs(*(const uint16_t *)(data + 0)),
+                                ntohs(*(const uint16_t *)(data + 2)),
+                                ntohs(*(const uint16_t *)(data + 4)));
                         data += 6;
                         size -= 6;
                     } else if (BKGDtype == PctB) {
-                        uint32_t pict_len = ntohl(*(uint32_t *)data);
+                        uint32_t pict_len = ntohl(*(const uint32_t *)data);
                         fprintf(stdout, "%u bytes - ", pict_len);
                         data += 4;
                         size -= 4;
@@ -592,36 +592,26 @@ int amg_dump_record(FILE *file)
                 hexprint(data, size, true);
             } else if (ds_record_get_type(record) == ds_record_type_Iloc) {
                 if (size == 16) {
-                    uint32_t x = ntohl(*(uint32_t *)(data + 0));
-                    uint32_t y = ntohl(*(uint32_t *)(data + 4));
-                    fprintf(stdout, "{ x = %u, y = %u } - ", x, y);
-                    data += 8;
-                    size -= 8;
+                    const Iloc_t iconLocation = ds_record_get_data_as_Iloc(record);
+                    fprintf(stdout, "{ x = %u, y = %u, unknown = ", iconLocation.x, iconLocation.y);
+                    hexprint(iconLocation.unknown, sizeof(iconLocation.unknown), true);
+                    fprintf(stdout, " }");
                 } else {
-                    fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 12\n", (const char *)&record_type_n, size);
+                    fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 16\n", (const char *)&record_type_n, size);
+                    hexprint(data, size, true);
                 }
-
-                hexprint(data, size, true);
             } else if (ds_record_get_type(record) == ds_record_type_fwi0) {
                 if (size == 16) {
-                    const uint16_t top = ntohs(*(uint16_t *)(data + 0));
-                    const uint16_t left = ntohs(*(uint16_t *)(data + 2));
-                    const uint16_t bottom = ntohs(*(uint16_t *)(data + 4));
-                    const uint16_t right = ntohs(*(uint16_t *)(data + 6));
-                    fprintf(stdout, "{ top = %hu, left = %hu, bottom = %hu, right = %hu } - ", top, left, bottom, right);
-                    data += 8;
-                    size -= 8;
-
-                    const uint32_t view = ntohl(*(uint32_t *)data);
-                    const uint32_t view_n = htonl(view);
-                    fprintf(stdout, "'%.4s' - ", (const char *)&view_n);
-                    data += 4;
-                    size -= 4;
+                    const fwi0_t windowInfo = ds_record_get_data_as_fwi0(record);
+                    const uint32_t view_n = htonl(windowInfo.view);
+                    fprintf(stdout, "{ top = %hu, left = %hu, bottom = %hu, right = %hu, view = '%.4s', unknown = ",
+                            windowInfo.top, windowInfo.left, windowInfo.bottom, windowInfo.right, (const char *)&view_n);
+                    hexprint(windowInfo.unknown, sizeof(windowInfo.unknown), true);
+                    fprintf(stdout, " }");
                 } else {
-                    fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 12\n", (const char *)&record_type_n, size);
+                    fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 16\n", (const char *)&record_type_n, size);
+                    hexprint(data, size, true);
                 }
-
-                hexprint(data, size, true);
             } else {
                 const size_t plist_text_len = ds_record_get_data_as_plist_ustr_len(record);
                 if (plist_text_len) {

@@ -136,6 +136,40 @@ size_t ds_record_get_data_as_ustr_len(ds_record_t *record)
     return record->data_ustr.size();
 }
 
+Iloc_t ds_record_get_data_as_Iloc(ds_record_t *record)
+{
+    assert(record);
+    assert(ds_record_get_data_as_blob_size(record) == 16);
+    const unsigned char *data = ds_record_get_data_as_blob_ptr(record);
+    Iloc_t iconLocation;
+    iconLocation.x = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(iconLocation.x);
+    iconLocation.y = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(iconLocation.y);
+    memcpy(iconLocation.unknown, data, sizeof(iconLocation.unknown));
+    return iconLocation;
+}
+
+fwi0_t ds_record_get_data_as_fwi0(ds_record_t *record)
+{
+    assert(record);
+    assert(ds_record_get_data_as_blob_size(record) == 16);
+    const unsigned char *data = ds_record_get_data_as_blob_ptr(record);
+    fwi0_t windowInfo;
+    windowInfo.top = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(windowInfo.top);
+    windowInfo.left = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(windowInfo.left);
+    windowInfo.bottom = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(windowInfo.bottom);
+    windowInfo.right = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(windowInfo.right);
+    windowInfo.view = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(windowInfo.view);
+    memcpy(windowInfo.unknown, data, sizeof(windowInfo.unknown));
+    return windowInfo;
+}
+
 uint64_t ds_record_get_data_as_comp(ds_record_t *record)
 {
     assert(record);

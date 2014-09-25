@@ -126,6 +126,12 @@ AMG_EXPORT AMG_EXTERN void ds_record_copy_data_as_plist_ustr(ds_record_t *record
 AMG_EXPORT AMG_EXTERN const uint16_t *ds_record_get_data_as_plist_ustr_ptr(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN size_t ds_record_get_data_as_plist_ustr_len(ds_record_t *record);
 
+typedef struct { uint32_t x, y; unsigned char unknown[8]; } Iloc_t;
+AMG_EXPORT AMG_EXTERN Iloc_t ds_record_get_data_as_Iloc(ds_record_t *record);
+
+typedef struct { uint16_t top, left, bottom, right; uint32_t view; unsigned char unknown[4]; } fwi0_t;
+AMG_EXPORT AMG_EXTERN fwi0_t ds_record_get_data_as_fwi0(ds_record_t *record);
+
 #ifdef __cplusplus
 AMG_EXPORT extern std::basic_string<uint16_t> ds_record_get_filename(ds_record_t *record);
 AMG_EXPORT extern std::vector<unsigned char> ds_record_get_data_as_blob(ds_record_t *record);
