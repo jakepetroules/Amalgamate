@@ -23,32 +23,7 @@
  */
 
 #include "dsio.h"
-#include "dsrecord.h"
-#include <string>
-#include <vector>
-
-struct _ds_record {
-    _ds_record();
-
-    /*!
-     * Filename, in big-endian UTF-16.
-     */
-    std::basic_string<uint16_t> filename;
-    ds_record_type record_type;
-    ds_record_data_type data_type;
-
-    union {
-        uint32_t llong;
-        uint16_t shor;
-        bool bbool;
-        FourCharCode type;
-        uint64_t comp;
-        UTCDateTime dutc;
-    } data;
-
-    std::vector<unsigned char> data_blob;
-    std::basic_string<uint16_t> data_ustr;
-};
+#include "dsrecord_p.h"
 
 _ds_record::_ds_record()
 : filename(), record_type(), data_type(), data(), data_blob(), data_ustr()
@@ -232,6 +207,7 @@ void ds_record_set_data_as_blob(ds_record_t *record, const unsigned char *blob, 
     assert(record);
     record->data_blob = std::vector<unsigned char>(len);
     memcpy(record->data_blob.data(), blob, len);
+    record->update_plist_ustr();
 }
 
 void ds_record_set_data_as_type(ds_record_t *record, FourCharCode type)
@@ -390,6 +366,7 @@ int ds_record_fread(ds_record_t *record, FILE *file)
             if (record->data_type == ds_record_data_type_blob) {
                 record->data_blob.resize(expected);
                 n = fread(record->data_blob.data(), sizeof(record->data_blob[0]), record->data_blob.size(), file);
+                record->update_plist_ustr();
             }
 
             if (record->data_type == ds_record_data_type_ustr) {

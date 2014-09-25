@@ -616,14 +616,13 @@ int amg_dump_record(FILE *file)
 
                 hexprint(data, size, true);
             } else {
-                const char *plist_text = 0;
-#if __OBJC__
-                NSObject *plist = [NSPropertyListSerialization propertyListWithData:[NSData dataWithBytes:data length:size] options:0 format:0 error:0];
-                if (plist)
-                    plist_text = plist.description.UTF8String;
-#endif
-                if (plist_text) {
-                    fprintf(stdout, "%s", plist_text);
+                const size_t plist_text_len = ds_record_get_data_as_plist_ustr_len(record);
+                if (plist_text_len) {
+                    CFStringRef plist_text = CFStringCreateWithCharacters(kCFAllocatorDefault,
+                                                                          ds_record_get_data_as_plist_ustr_ptr(record),
+                                                                          plist_text_len);
+                    fprintf(stdout, "%s", CFStringGetCStringPtr(plist_text, kCFStringEncodingUTF8));
+                    CFRelease(plist_text);
                 } else {
                     fprintf(stdout, "%zu bytes - ", size);
                     hexprint(data, size, true);

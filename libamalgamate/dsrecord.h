@@ -118,10 +118,15 @@ AMG_EXPORT AMG_EXTERN const uint16_t *ds_record_get_data_as_ustr_ptr(ds_record_t
 AMG_EXPORT AMG_EXTERN uint64_t ds_record_get_data_as_comp(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN UTCDateTime ds_record_get_data_as_dutc(ds_record_t *record);
 
+AMG_EXPORT AMG_EXTERN void ds_record_copy_data_as_plist_ustr(ds_record_t *record, uint16_t *ustr);
+AMG_EXPORT AMG_EXTERN const uint16_t *ds_record_get_data_as_plist_ustr_ptr(ds_record_t *record);
+AMG_EXPORT AMG_EXTERN size_t ds_record_get_data_as_plist_ustr_len(ds_record_t *record);
+
 #ifdef __cplusplus
 AMG_EXPORT extern std::basic_string<uint16_t> ds_record_get_filename(ds_record_t *record);
 AMG_EXPORT extern std::vector<unsigned char> ds_record_get_data_as_blob(ds_record_t *record);
 AMG_EXPORT extern std::basic_string<uint16_t> ds_record_get_data_as_ustr(ds_record_t *record);
+AMG_EXPORT extern std::basic_string<uint16_t> ds_record_get_data_as_plist_ustr(ds_record_t *record);
 #endif
 
 AMG_EXPORT AMG_EXTERN void ds_record_set_filename(ds_record_t *record, const uint16_t *ustr, size_t len);
