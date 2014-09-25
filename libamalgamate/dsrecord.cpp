@@ -46,7 +46,7 @@ size_t ds_record_get_filename_len(ds_record_t *record)
     return record->filename.size();
 }
 
-void ds_copy_record_filename(ds_record_t *record, uint16_t *ustr)
+void ds_record_copy_filename(ds_record_t *record, uint16_t *ustr)
 {
     assert(record);
     assert(ustr);
@@ -90,7 +90,7 @@ bool ds_record_get_data_as_bool(ds_record_t *record)
     return record->data.bbool;
 }
 
-void ds_copy_record_data_as_blob(ds_record_t *record, unsigned char *blob)
+void ds_record_copy_data_as_blob(ds_record_t *record, unsigned char *blob)
 {
     assert(record);
     assert(blob);
@@ -116,12 +116,6 @@ FourCharCode ds_record_get_data_as_type(ds_record_t *record)
     return record->data.type;
 }
 
-size_t ds_record_get_data_as_ustr_len(ds_record_t *record)
-{
-    assert(record);
-    return record->data_ustr.size();
-}
-
 void ds_copy_record_data_as_ustr(ds_record_t *record, uint16_t *ustr)
 {
     assert(record);
@@ -134,6 +128,12 @@ const uint16_t *ds_record_get_data_as_ustr_ptr(ds_record_t *record)
 {
     assert(record);
     return record->data_ustr.data();
+}
+
+size_t ds_record_get_data_as_ustr_len(ds_record_t *record)
+{
+    assert(record);
+    return record->data_ustr.size();
 }
 
 uint64_t ds_record_get_data_as_comp(ds_record_t *record)

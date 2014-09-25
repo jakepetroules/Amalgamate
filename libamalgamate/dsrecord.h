@@ -99,7 +99,7 @@ AMG_EXPORT AMG_EXTERN ds_record_t *ds_record_create(void);
 AMG_EXPORT AMG_EXTERN void ds_record_free(ds_record_t *record);
 
 AMG_EXPORT AMG_EXTERN size_t ds_record_get_filename_len(ds_record_t *record);
-AMG_EXPORT AMG_EXTERN void ds_copy_record_filename(ds_record_t *record, uint16_t *ustr);
+AMG_EXPORT AMG_EXTERN void ds_record_copy_filename(ds_record_t *record, uint16_t *ustr);
 AMG_EXPORT AMG_EXTERN const uint16_t *ds_record_get_filename_ptr(ds_record_t *record);
 
 AMG_EXPORT AMG_EXTERN ds_record_type ds_record_get_type(ds_record_t *record);
@@ -108,13 +108,17 @@ AMG_EXPORT AMG_EXTERN ds_record_data_type ds_record_get_data_type(ds_record_t *r
 AMG_EXPORT AMG_EXTERN uint32_t ds_record_get_data_as_long(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN uint16_t ds_record_get_data_as_shor(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN bool ds_record_get_data_as_bool(ds_record_t *record);
-AMG_EXPORT AMG_EXTERN void ds_copy_record_data_as_blob(ds_record_t *record, unsigned char *blob);
+
+AMG_EXPORT AMG_EXTERN void ds_record_copy_data_as_blob(ds_record_t *record, unsigned char *blob);
 AMG_EXPORT AMG_EXTERN const unsigned char *ds_record_get_data_as_blob_ptr(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN size_t ds_record_get_data_as_blob_size(ds_record_t *record);
+
 AMG_EXPORT AMG_EXTERN FourCharCode ds_record_get_data_as_type(ds_record_t *record);
-AMG_EXPORT AMG_EXTERN size_t ds_record_get_data_as_ustr_len(ds_record_t *record);
+
 AMG_EXPORT AMG_EXTERN void ds_copy_record_data_as_ustr(ds_record_t *record, uint16_t *ustr);
 AMG_EXPORT AMG_EXTERN const uint16_t *ds_record_get_data_as_ustr_ptr(ds_record_t *record);
+AMG_EXPORT AMG_EXTERN size_t ds_record_get_data_as_ustr_len(ds_record_t *record);
+
 AMG_EXPORT AMG_EXTERN uint64_t ds_record_get_data_as_comp(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN UTCDateTime ds_record_get_data_as_dutc(ds_record_t *record);
 
