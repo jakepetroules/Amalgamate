@@ -161,7 +161,7 @@ int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, F
 
     // The list of addresses is always padded with zeros to a multiple of 256 entries
     const size_t factor = 256;
-    size_t block_count_to_read = allocator_state->block_count + factor - 1 - (allocator_state->block_count - 1) % factor;
+    const size_t block_count_to_read = allocator_state->block_count + factor - 1 - (allocator_state->block_count - 1) % factor;
 
     for (size_t i = 0; i < block_count_to_read; ++i)
     {
