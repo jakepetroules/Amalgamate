@@ -78,7 +78,9 @@ typedef struct {
     uint32_t node_levels;
     uint32_t record_count;
     uint32_t node_count;
-    uint32_t tree_node_page_size; // ??? always 0x1000
+    uint32_t tree_node_page_size; // ??? always dsstore_header_block_tree_node_page_size
 } dsstore_header_block_t;
+
+static const uint32_t dsstore_header_block_tree_node_page_size = 0x1000;
 
 #endif

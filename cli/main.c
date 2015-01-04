@@ -261,8 +261,10 @@ int amg_read_header_block(dsstore_header_block_t *header_block, FILE *file)
         return 1;
     }
 
-    if (header_block->tree_node_page_size != 0x1000) {
-        fprintf(stderr, "warning: unexpected node page size %u; expected 0x1000\n", header_block->tree_node_page_size);
+    if (header_block->tree_node_page_size != dsstore_header_block_tree_node_page_size) {
+        fprintf(stderr, "warning: unexpected node page size %u; expected 0x%x\n",
+                header_block->tree_node_page_size,
+                dsstore_header_block_tree_node_page_size);
         return 1;
     }
 
