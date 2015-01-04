@@ -298,7 +298,7 @@ int amg_dump_file(const char *filename)
     fprintf(stdout, "allocator offset: %u\n", header.allocator_offset);
     fprintf(stdout, "allocator size: %u\n", header.allocator_size);
     fprintf(stdout, "allocator offset copy: %u\n", header.allocator_offset2);
-    fprintf(stdout, "padding?: 0x");
+    fprintf(stdout, "padding: 0x");
     for (size_t i = 0; i < sizeof(header.padding); ++i)
         fprintf(stdout, "%02x", header.padding[i]);
     fprintf(stdout, "\n");
@@ -459,7 +459,7 @@ int amg_dump_block(dsstore_buddy_allocator_state_t *allocator_state,
 
     // Restore stream offset
     if (fseek(file, stream_offset, SEEK_SET) != 0) {
-        fprintf(stderr, "failed to restore original stream offset after readin block\n");
+        fprintf(stderr, "failed to restore original stream offset after reading block\n");
         ret = 1;
         goto cleanup;
     }
