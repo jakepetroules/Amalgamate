@@ -28,16 +28,6 @@
 
 #include "amg.h"
 
-static uint32_t pow_uint32_t(uint32_t x, uint32_t y)
-{
-    if (y == 0) return 1;
-    const uint32_t result = pow_uint32_t(x, y / 2);
-    return (y % 2 == 0) ? (result * result) : (x * result * result);
-}
-
-static inline uint32_t block_address_offset(uint32_t a) { return a & ~0x1fu; }
-static inline uint32_t block_address_size(uint32_t a) { return pow_uint32_t(2, a & 0x1f); }
-
 int amg_read_file(dsstore_header_t *header, FILE *file);
 int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
 int amg_read_header_block(dsstore_header_block_t *header_block, FILE *file);
@@ -348,8 +338,8 @@ int amg_dump_file(const char *filename)
 
     // Look up the offset of the header block
     const uint32_t header_block_addr = allocator_state.block_addresses[header_block_number];
-    const uint32_t header_block_offset = block_address_offset(header_block_addr);
-    const uint32_t header_block_size = block_address_size(header_block_addr);
+    const uint32_t header_block_offset = dsstore_buddy_allocator_state_block_address_offset(header_block_addr);
+    const uint32_t header_block_size = dsstore_buddy_allocator_state_block_address_size(header_block_addr);
 
     if (fseek(file, sizeof(header.version) + header_block_offset, SEEK_SET) != 0) {
         fprintf(stderr, "could not seek to header block offset\n");
@@ -395,8 +385,8 @@ int amg_dump_block(dsstore_buddy_allocator_state_t *allocator_state,
 
     // Look up the offset of the root node
     const uint32_t root_block_addr = allocator_state->block_addresses[block_number];
-    const uint32_t root_block_offset = block_address_offset(root_block_addr);
-    const uint32_t root_block_size = block_address_size(root_block_addr);
+    const uint32_t root_block_offset = dsstore_buddy_allocator_state_block_address_offset(root_block_addr);
+    const uint32_t root_block_size = dsstore_buddy_allocator_state_block_address_size(root_block_addr);
 
     off_t stream_offset = ftell(file);
     if (fseek(file, /*sizeof(header.version)*/ 4 + root_block_offset, SEEK_SET) != 0) {
@@ -480,8 +470,8 @@ int amg_dump_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, F
     for (size_t i = 0; i < allocator_state->block_count; ++i) {
         // Each address is a packed offset and size...
         const uint32_t addr = allocator_state->block_addresses[i];
-        const uint32_t offset = block_address_offset(addr);
-        const uint32_t size = block_address_size(addr);
+        const uint32_t offset = dsstore_buddy_allocator_state_block_address_offset(addr);
+        const uint32_t size = dsstore_buddy_allocator_state_block_address_size(addr);
         fprintf(stdout, " {%u, %u}", offset, size);
     }
     fprintf(stdout, "\n");

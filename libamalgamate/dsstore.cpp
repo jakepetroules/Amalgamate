@@ -31,3 +31,21 @@ void dsstore_header_init(dsstore_header_t *header)
     header->version = 1;
     header->magic = kDSHeaderMagic;
 }
+
+static uint32_t pow_uint32_t(uint32_t x, uint32_t y)
+{
+    if (y == 0)
+        return 1;
+    const uint32_t result = pow_uint32_t(x, y / 2);
+    return (y % 2 == 0) ? (result * result) : (x * result * result);
+}
+
+uint32_t dsstore_buddy_allocator_state_block_address_offset(uint32_t a)
+{
+    return a & ~0x1fu;
+}
+
+uint32_t dsstore_buddy_allocator_state_block_address_size(uint32_t a)
+{
+    return pow_uint32_t(2, a & 0x1f);
+}

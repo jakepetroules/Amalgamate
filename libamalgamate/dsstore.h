@@ -73,6 +73,9 @@ typedef struct {
     } free_lists[32];
 } dsstore_buddy_allocator_state_t;
 
+AMG_EXPORT AMG_EXTERN uint32_t dsstore_buddy_allocator_state_block_address_offset(uint32_t a);
+AMG_EXPORT AMG_EXTERN uint32_t dsstore_buddy_allocator_state_block_address_size(uint32_t a);
+
 typedef struct {
     uint32_t root_block_number;
     uint32_t node_levels;
