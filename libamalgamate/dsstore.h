@@ -86,4 +86,8 @@ typedef struct {
 
 static const uint32_t dsstore_header_block_tree_node_page_size = 0x1000;
 
+AMG_EXPORT AMG_EXTERN int amg_read_file(dsstore_header_t *header, FILE *file);
+AMG_EXPORT AMG_EXTERN int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
+AMG_EXPORT AMG_EXTERN int amg_read_header_block(dsstore_header_block_t *header_block, FILE *file);
+
 #endif

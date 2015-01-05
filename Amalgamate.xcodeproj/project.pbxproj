@@ -31,7 +31,7 @@
 		14DBDF1619299FE6008758F2 /* amalgamate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1519299FE6008758F2 /* amalgamate.1 */; };
 		14DBDF221929A10F008758F2 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
 		14DBDF271929A122008758F2 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
-		14DBDF2A1929A211008758F2 /* dsstore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF291929A211008758F2 /* dsstore.cpp */; };
+		14DBDF2A1929A211008758F2 /* dsstore.c in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF291929A211008758F2 /* dsstore.c */; };
 		14DBDF2C1929A21F008758F2 /* dsstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 14DBDF2B1929A21F008758F2 /* dsstore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		14DBDF2E192A8043008758F2 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF2D192A8043008758F2 /* main.c */; };
 /* End PBXBuildFile section */
@@ -124,7 +124,7 @@
 		14DBDF1119299FE5008758F2 /* amalgamate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = amalgamate; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBDF1519299FE6008758F2 /* amalgamate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = amalgamate.1; sourceTree = "<group>"; };
 		14DBDF1E1929A032008758F2 /* libamalgamate.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libamalgamate.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		14DBDF291929A211008758F2 /* dsstore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsstore.cpp; sourceTree = "<group>"; };
+		14DBDF291929A211008758F2 /* dsstore.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsstore.c; sourceTree = "<group>"; };
 		14DBDF2B1929A21F008758F2 /* dsstore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsstore.h; sourceTree = "<group>"; };
 		14DBDF2D192A8043008758F2 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		14E8ED3219AAC7ED00E56E54 /* AmalgamateTests.DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmalgamateTests.DS_Store; sourceTree = "<group>"; };
@@ -278,7 +278,7 @@
 				14652FAE19AA82FC00959E44 /* dsrecord.h */,
 				14B550D419D3DA560042C966 /* dsrecord.mm */,
 				14B550D619D3DAF40042C966 /* dsrecord_p.h */,
-				14DBDF291929A211008758F2 /* dsstore.cpp */,
+				14DBDF291929A211008758F2 /* dsstore.c */,
 				14DBDF2B1929A21F008758F2 /* dsstore.h */,
 				14652FB519AA9B0A00959E44 /* dsio.h */,
 			);
@@ -475,7 +475,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14DBDF2A1929A211008758F2 /* dsstore.cpp in Sources */,
+				14DBDF2A1929A211008758F2 /* dsstore.c in Sources */,
 				14652FAF19AA82FC00959E44 /* dsrecord.cpp in Sources */,
 				14B550D519D3DA560042C966 /* dsrecord.mm in Sources */,
 			);
