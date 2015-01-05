@@ -394,7 +394,7 @@
 		14DBDECB19299F4D008758F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				TargetAttributes = {
 					14DBDEF819299FA9008758F2 = {
 						TestTargetID = 14DBDED419299FA9008758F2;
