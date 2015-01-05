@@ -14,6 +14,12 @@
 		14652FB019AA82FC00959E44 /* dsrecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FAE19AA82FC00959E44 /* dsrecord.h */; };
 		14652FB219AA848100959E44 /* amgexport.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FB119AA848100959E44 /* amgexport.h */; };
 		14652FB419AA8ACA00959E44 /* amg.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FB319AA8ACA00959E44 /* amg.h */; };
+		147C5D9A1A5AF67900EBFD90 /* AmalgamateTests.DS_Store in Resources */ = {isa = PBXBuildFile; fileRef = 14E8ED3219AAC7ED00E56E54 /* AmalgamateTests.DS_Store */; };
+		147C5D9B1A5AF67900EBFD90 /* Firefox31.DS_Store in Resources */ = {isa = PBXBuildFile; fileRef = 14E8ED3519AB025A00E56E54 /* Firefox31.DS_Store */; };
+		147C5D9C1A5AF67900EBFD90 /* Silverlock2.DS_Store in Resources */ = {isa = PBXBuildFile; fileRef = 14E8ED3319AAC7ED00E56E54 /* Silverlock2.DS_Store */; };
+		147C5D9D1A5AF67900EBFD90 /* Xcode6b6.DS_Store in Resources */ = {isa = PBXBuildFile; fileRef = 14E8ED3419AB01DC00E56E54 /* Xcode6b6.DS_Store */; };
+		147C5DA01A5AF7C000EBFD90 /* amgdump.c in Sources */ = {isa = PBXBuildFile; fileRef = 147C5D9E1A5AF7C000EBFD90 /* amgdump.c */; };
+		147C5DA11A5AF7C000EBFD90 /* amgdump.h in Headers */ = {isa = PBXBuildFile; fileRef = 147C5D9F1A5AF7C000EBFD90 /* amgdump.h */; };
 		14B550D519D3DA560042C966 /* dsrecord.mm in Sources */ = {isa = PBXBuildFile; fileRef = 14B550D419D3DA560042C966 /* dsrecord.mm */; };
 		14B550D719D3DAF40042C966 /* dsrecord_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B550D619D3DAF40042C966 /* dsrecord_p.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		14DBDED919299FA9008758F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDED819299FA9008758F2 /* Cocoa.framework */; };
@@ -99,6 +105,8 @@
 		14652FB119AA848100959E44 /* amgexport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amgexport.h; sourceTree = "<group>"; };
 		14652FB319AA8ACA00959E44 /* amg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amg.h; sourceTree = "<group>"; };
 		14652FB519AA9B0A00959E44 /* dsio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dsio.h; sourceTree = "<group>"; };
+		147C5D9E1A5AF7C000EBFD90 /* amgdump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = amgdump.c; sourceTree = "<group>"; };
+		147C5D9F1A5AF7C000EBFD90 /* amgdump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amgdump.h; sourceTree = "<group>"; };
 		14B550D419D3DA560042C966 /* dsrecord.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = dsrecord.mm; sourceTree = "<group>"; };
 		14B550D619D3DAF40042C966 /* dsrecord_p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsrecord_p.h; sourceTree = "<group>"; };
 		14DBDED519299FA9008758F2 /* Amalgamate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalgamate.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,6 +281,8 @@
 			isa = PBXGroup;
 			children = (
 				14652FB319AA8ACA00959E44 /* amg.h */,
+				147C5D9E1A5AF7C000EBFD90 /* amgdump.c */,
+				147C5D9F1A5AF7C000EBFD90 /* amgdump.h */,
 				14652FB119AA848100959E44 /* amgexport.h */,
 				14652FAD19AA82FC00959E44 /* dsrecord.cpp */,
 				14652FAE19AA82FC00959E44 /* dsrecord.h */,
@@ -306,6 +316,7 @@
 			files = (
 				14652FB419AA8ACA00959E44 /* amg.h in Headers */,
 				14652FB019AA82FC00959E44 /* dsrecord.h in Headers */,
+				147C5DA11A5AF7C000EBFD90 /* amgdump.h in Headers */,
 				14DBDF2C1929A21F008758F2 /* dsstore.h in Headers */,
 				14B550D719D3DAF40042C966 /* dsrecord_p.h in Headers */,
 				14652FB219AA848100959E44 /* amgexport.h in Headers */,
@@ -439,7 +450,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				147C5D9A1A5AF67900EBFD90 /* AmalgamateTests.DS_Store in Resources */,
+				147C5D9C1A5AF67900EBFD90 /* Silverlock2.DS_Store in Resources */,
+				147C5D9B1A5AF67900EBFD90 /* Firefox31.DS_Store in Resources */,
 				14DBDF0419299FAA008758F2 /* InfoPlist.strings in Resources */,
+				147C5D9D1A5AF67900EBFD90 /* Xcode6b6.DS_Store in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14DBDF2A1929A211008758F2 /* dsstore.c in Sources */,
+				147C5DA01A5AF7C000EBFD90 /* amgdump.c in Sources */,
 				14652FAF19AA82FC00959E44 /* dsrecord.cpp in Sources */,
 				14B550D519D3DA560042C966 /* dsrecord.mm in Sources */,
 			);

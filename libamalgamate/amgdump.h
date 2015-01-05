@@ -22,18 +22,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <assert.h>
+#ifndef AMALGAMATE_DUMP_H
+#define AMALGAMATE_DUMP_H
+
 #include <stdio.h>
-#include <string.h>
+#include "dsstore.h"
 
-#include "amg.h"
+AMG_EXPORT AMG_EXTERN int amg_dump_file(const char *filename);
+AMG_EXPORT AMG_EXTERN int amg_dump_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
+AMG_EXPORT AMG_EXTERN int amg_dump_header_block(dsstore_header_block_t *header_block, FILE *file);
+AMG_EXPORT AMG_EXTERN int amg_dump_block(dsstore_buddy_allocator_state_t *allocator_state,
+                                         dsstore_header_block_t *header_block,
+                                         uint32_t block_number, FILE *file);
+AMG_EXPORT AMG_EXTERN int amg_dump_record(FILE *file);
 
-int main(int argc, const char * argv[])
-{
-    if (argc == 3 && strcmp(argv[1], "--dump") == 0)
-    {
-        return amg_dump_file(argv[2]);
-    }
-
-    return 0;
-}
+#endif // AMALGAMATE_DUMP_H

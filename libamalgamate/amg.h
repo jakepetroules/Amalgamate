@@ -25,6 +25,7 @@
 #ifndef Amalgamate_amg_h
 #define Amalgamate_amg_h
 
+#include "amgdump.h"
 #include "dsio.h"
 #include "dsrecord.h"
 #include "dsstore.h"

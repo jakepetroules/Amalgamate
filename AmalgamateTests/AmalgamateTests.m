@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#include "amg.h"
 
 @interface AmalgamateTests : XCTestCase
 
@@ -26,9 +27,15 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testReadableFiles
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSArray *paths = [[NSBundle bundleForClass:self.class] pathsForResourcesOfType:@"DS_Store" inDirectory:nil];
+    XCTAssertTrue(paths.count > 0);
+    for (NSString *path in paths) {
+        dsstore_header_t header;
+        int status = amg_dump_file(path.fileSystemRepresentation);
+        XCTAssertEqual(status, 0);
+    }
 }
 
 @end
