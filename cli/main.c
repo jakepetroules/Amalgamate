@@ -52,7 +52,7 @@ int amg_dump_record(FILE *file);
 
 int main(int argc, const char * argv[])
 {
-    if (strcmp(argv[1], "--dump") == 0)
+    if (argc == 3 && strcmp(argv[1], "--dump") == 0)
     {
         return amg_dump_file(argv[2]);
     }
@@ -470,6 +470,8 @@ cleanup:
 
 int amg_dump_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, FILE *file)
 {
+    (void)file;
+
     fprintf(stdout, "\n");
 
     fprintf(stdout, "allocator block count: %u\n", allocator_state->block_count);
@@ -504,6 +506,8 @@ int amg_dump_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, F
 
 int amg_dump_header_block(dsstore_header_block_t *header_block, FILE *file)
 {
+    (void)file;
+
     fprintf(stdout, "\n");
 
     fprintf(stdout, "root block number: %u\n", header_block->root_block_number);
@@ -552,12 +556,12 @@ int amg_dump_record(FILE *file)
     const uint32_t record_type_n = htonl(ds_record_get_type(record));
     fprintf(stdout, "record type: '%.4s' (%u)\n",
             (const char *)&record_type_n,
-            (unsigned int)ds_record_get_type(record));
+            (unsigned int)(ds_record_get_type(record)));
 
     const uint32_t data_type_n = htonl(ds_record_get_data_type(record));
     fprintf(stdout, "data type: '%.4s' (%u)\n",
             (const char *)&data_type_n,
-            (unsigned int)ds_record_get_data_type(record));
+            (unsigned int)(ds_record_get_data_type(record)));
 
     fprintf(stdout, "data: ");
     switch (ds_record_get_data_type(record)) {
