@@ -56,55 +56,51 @@ int amg_read_file(dsstore_header_t *header, FILE *file)
     assert(header);
     assert(file);
 
-    if (fread(&header->version, sizeof(header->version), 1, file) != 1)
+    if (fread_uint32_be(&header->version, file) != 1)
     {
         fprintf(stderr, "error reading version\n");
         return 1;
     }
 
-    header->version = ntohl(header->version);
     if (header->version != 1)
     {
         fprintf(stderr, "wrong version %u\n", header->version);
         return 1;
     }
 
-    if (fread(&header->magic, sizeof(header->magic), 1, file) != 1)
+    uint32_t magic;
+    if (fread_uint32_be(&magic, file) != 1)
     {
         fprintf(stderr, "error reading magic\n");
         return 1;
     }
 
-    header->magic = ntohl(header->magic);
+    header->magic = (FourCharCode)magic;
+    
     if (header->magic != kDSHeaderMagic)
     {
         fprintf(stderr, "wrong magic '%u', expected '%u'\n", (unsigned int)header->magic, (unsigned int)kDSHeaderMagic);
         return 1;
     }
 
-    if (fread(&header->allocator_offset, sizeof(header->allocator_offset), 1, file) != 1)
+    if (fread_uint32_be(&header->allocator_offset, file) != 1)
     {
         fprintf(stderr, "error reading allocator offset\n");
         return 1;
     }
 
-    header->allocator_offset = ntohl(header->allocator_offset);
-
-    if (fread(&header->allocator_size, sizeof(header->allocator_size), 1, file) != 1)
+    if (fread_uint32_be(&header->allocator_size, file) != 1)
     {
         fprintf(stderr, "error reading allocator size\n");
         return 1;
     }
 
-    header->allocator_size = ntohl(header->allocator_size);
-
-    if (fread(&header->allocator_offset2, sizeof(header->allocator_offset2), 1, file) != 1)
+    if (fread_uint32_be(&header->allocator_offset2, file) != 1)
     {
         fprintf(stderr, "error reading allocator offset copy\n");
         return 1;
     }
 
-    header->allocator_offset2 = ntohl(header->allocator_offset2);
     if (header->allocator_offset != header->allocator_offset2)
     {
         // "invalid storage type bad root address"
@@ -129,21 +125,17 @@ int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, F
     assert(allocator_state);
     assert(file);
 
-    if (fread(&allocator_state->block_count, sizeof(allocator_state->block_count), 1, file) != 1)
+    if (fread_uint32_be(&allocator_state->block_count, file) != 1)
     {
         fprintf(stderr, "error reading allocator block count\n");
         return 1;
     }
 
-    allocator_state->block_count = ntohl(allocator_state->block_count);
-
-    if (fread(&allocator_state->unknown, sizeof(allocator_state->unknown), 1, file) != 1)
+    if (fread_uint32_be(&allocator_state->unknown, file) != 1)
     {
         fprintf(stderr, "error reading allocator ????\n");
         return 1;
     }
-
-    allocator_state->unknown = ntohl(allocator_state->unknown);
 
     if (allocator_state->unknown != 0)
     {
@@ -156,26 +148,22 @@ int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, F
 
     for (size_t i = 0; i < block_count_to_read; ++i)
     {
-        if (fread(&allocator_state->block_addresses[i], sizeof(allocator_state->block_addresses[i]), 1, file) != 1)
+        if (fread_uint32_be(&allocator_state->block_addresses[i], file) != 1)
         {
             fprintf(stderr, "error reading allocator block address #%zu\n", i);
             return 1;
         }
-
-        allocator_state->block_addresses[i] = ntohl(allocator_state->block_addresses[i]);
     }
 
-    if (fread(&allocator_state->directory_count, sizeof(allocator_state->directory_count), 1, file) != 1)
+    if (fread_uint32_be(&allocator_state->directory_count, file) != 1)
     {
         fprintf(stderr, "error reading allocator directory count\n");
         return 1;
     }
 
-    allocator_state->directory_count = ntohl(allocator_state->directory_count);
-
     for (size_t i = 0; i < allocator_state->directory_count; ++i)
     {
-        if (fread(&allocator_state->directory_entries[i].count, sizeof(allocator_state->directory_entries[i].count), 1, file) != 1)
+        if (fread_uint8(&allocator_state->directory_entries[i].count, file) != 1)
         {
             fprintf(stderr, "error reading allocator directory entry #%zu data size\n", i);
             return 1;
@@ -187,35 +175,29 @@ int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, F
             return 1;
         }
 
-        if (fread(&allocator_state->directory_entries[i].block_number, sizeof(allocator_state->directory_entries[i].block_number), 1, file) != 1)
+        if (fread_uint32_be(&allocator_state->directory_entries[i].block_number, file) != 1)
         {
             fprintf(stderr, "error reading allocator directory entry #%zu block number\n", i);
             return 1;
         }
-
-        allocator_state->directory_entries[i].block_number = ntohl(allocator_state->directory_entries[i].block_number);
     }
 
     const size_t free_list_count = sizeof(allocator_state->free_lists) / sizeof(allocator_state->free_lists[0]);
     for (size_t i = 0; i < free_list_count; ++i)
     {
-        if (fread(&allocator_state->free_lists[i].count, sizeof(allocator_state->free_lists[i].count), 1, file) != 1)
+        if (fread_uint32_be(&allocator_state->free_lists[i].count, file) != 1)
         {
             fprintf(stderr, "error reading allocator free list #%zu offset count\n", i);
             return 1;
         }
 
-        allocator_state->free_lists[i].count = ntohl(allocator_state->free_lists[i].count);
-
         for (size_t j = 0; j < allocator_state->free_lists[i].count; ++j)
         {
-            if (fread(&allocator_state->free_lists[i].offsets[j], sizeof(allocator_state->free_lists[i].offsets[j]), 1, file) != 1)
+            if (fread_uint32_be(&allocator_state->free_lists[i].offsets[j], file) != 1)
             {
                 fprintf(stderr, "error reading allocator free list #%zu offset #%zu\n", i, j);
                 return 1;
             }
-
-            allocator_state->free_lists[i].offsets[j] = ntohl(allocator_state->free_lists[i].offsets[j]);
         }
     }
 

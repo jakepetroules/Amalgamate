@@ -52,6 +52,13 @@ inline static uint64_t uint64_from_be(const unsigned char *p) {
     return ntohll(i);
 }
 
+inline static size_t fread_uint8(uint8_t *value, FILE *file)
+{
+    assert(value);
+    assert(file);
+    return fread(value, sizeof(*value), 1, file);
+}
+
 inline static size_t fread_uint16_be(uint16_t *value, FILE *file)
 {
     assert(value);
