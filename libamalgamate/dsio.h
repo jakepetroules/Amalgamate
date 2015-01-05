@@ -26,9 +26,31 @@
 #define Amalgamate_dsio_h
 
 #include <assert.h>
+#include <memory.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <arpa/inet.h>
+
+inline static uint16_t uint16_from_be(const unsigned char *p) {
+    assert(p);
+    uint16_t i;
+    memcpy(&i, p, sizeof(i));
+    return ntohs(i);
+}
+
+inline static uint32_t uint32_from_be(const unsigned char *p) {
+    assert(p);
+    uint32_t i;
+    memcpy(&i, p, sizeof(i));
+    return ntohl(i);
+}
+
+inline static uint64_t uint64_from_be(const unsigned char *p) {
+    assert(p);
+    uint64_t i;
+    memcpy(&i, p, sizeof(i));
+    return ntohll(i);
+}
 
 inline static size_t fread_uint16_be(uint16_t *value, FILE *file)
 {

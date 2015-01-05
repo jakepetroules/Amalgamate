@@ -571,7 +571,7 @@ int amg_dump_record(FILE *file)
 
             if (ds_record_get_type(record) == ds_record_type_BKGD) {
                 if (size == 12) {
-                    const uint32_t BKGDtype = ntohl(*(const uint32_t *)data);
+                    const uint32_t BKGDtype = uint32_from_be(data);
                     const uint32_t ClrB = FOUR_CHAR_CODE('ClrB'), PctB = FOUR_CHAR_CODE('PctB');
 
                     fprintf(stdout, "'%.4s' - ", data);
@@ -580,13 +580,13 @@ int amg_dump_record(FILE *file)
 
                     if (BKGDtype == ClrB) {
                         fprintf(stdout, "rgb(%hu, %hu, %hu) - ",
-                                ntohs(*(const uint16_t *)(data + 0)),
-                                ntohs(*(const uint16_t *)(data + 2)),
-                                ntohs(*(const uint16_t *)(data + 4)));
+                                uint16_from_be(data + 0),
+                                uint16_from_be(data + 2),
+                                uint16_from_be(data + 4));
                         data += 6;
                         size -= 6;
                     } else if (BKGDtype == PctB) {
-                        uint32_t pict_len = ntohl(*(const uint32_t *)data);
+                        uint32_t pict_len = uint32_from_be(data);
                         fprintf(stdout, "%u bytes - ", pict_len);
                         data += 4;
                         size -= 4;
