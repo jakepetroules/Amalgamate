@@ -291,6 +291,16 @@ static inline void hexprint(const unsigned char *data, size_t len, bool print0x)
     }
 }
 
+static inline void fprintfcfstring(FILE *file, CFStringRef str) {
+    const CFStringEncoding encoding = kCFStringEncodingUTF8;
+    const CFIndex filename_utf8_len = CFStringGetMaximumSizeForEncoding(CFStringGetLength(str), encoding);
+    char *filename_utf8 = (char *)malloc((sizeof(char) * (size_t)filename_utf8_len) + 1);
+    Boolean c = CFStringGetCString(str, filename_utf8, filename_utf8_len, encoding);
+    assert(c);
+    fprintf(file, "%s", filename_utf8);
+    free(filename_utf8);
+}
+
 int amg_dump_record(FILE *file)
 {
     ds_record_t *record = ds_record_create();
@@ -302,11 +312,14 @@ int amg_dump_record(FILE *file)
 
     fprintf(stdout, "\n");
 
+    fprintf(stdout, "filename: ");
     CFStringRef filename = CFStringCreateWithCharacters(kCFAllocatorDefault,
                                                         ds_record_get_filename_ptr(record),
                                                         (CFIndex)ds_record_get_filename_len(record));
-    fprintf(stdout, "filename: %s\n", CFStringGetCStringPtr(filename, kCFStringEncodingUTF8));
+
+    fprintfcfstring(stdout, filename);
     CFRelease(filename);
+    fprintf(stdout, "\n");
 
     const uint32_t record_type_n = htonl(ds_record_get_type(record));
     fprintf(stdout, "record type: '%.4s' (%u)\n",
@@ -379,7 +392,7 @@ int amg_dump_record(FILE *file)
                     CFStringRef plist_text = CFStringCreateWithCharacters(kCFAllocatorDefault,
                                                                           ds_record_get_data_as_plist_ustr_ptr(record),
                                                                           (CFIndex)plist_text_len);
-                    fprintf(stdout, "%s", CFStringGetCStringPtr(plist_text, kCFStringEncodingUTF8));
+                    fprintfcfstring(stdout, plist_text);
                     CFRelease(plist_text);
                 } else {
                     fprintf(stdout, "%zu bytes - ", size);
@@ -416,7 +429,7 @@ int amg_dump_record(FILE *file)
             CFStringRef recordfilename = CFStringCreateWithCharacters(kCFAllocatorDefault,
                                                                       ds_record_get_data_as_ustr_ptr(record),
                                                                       (CFIndex)ds_record_get_data_as_ustr_len(record));
-            fprintf(stdout, "%s", CFStringGetCStringPtr(recordfilename, kCFStringEncodingUTF8));
+            fprintfcfstring(stdout, recordfilename);
             CFRelease(recordfilename);
             break;
         }
