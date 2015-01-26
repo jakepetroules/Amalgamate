@@ -63,6 +63,7 @@ typedef enum {
     ds_record_type_icsp = FOUR_CHAR_CODE('icsp'),
     ds_record_type_icvo = FOUR_CHAR_CODE('icvo'),
     ds_record_type_icvp = FOUR_CHAR_CODE('icvp'),
+    ds_record_type_icvP = FOUR_CHAR_CODE('icvP'),
     ds_record_type_icvt = FOUR_CHAR_CODE('icvt'),
     ds_record_type_info = FOUR_CHAR_CODE('info'),
     ds_record_type_logS = FOUR_CHAR_CODE('logS'), // prLogicalSize (logs)?

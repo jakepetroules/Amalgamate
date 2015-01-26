@@ -689,6 +689,8 @@ ds_record_data_type ds_record_data_type_for_record_type(ds_record_type record_ty
             return ds_record_data_type_blob;
         case ds_record_type_icvp:
             return ds_record_data_type_blob;
+        case ds_record_type_icvP:
+            return ds_record_data_type_blob;
         case ds_record_type_icvt:
             return ds_record_data_type_shor;
         case ds_record_type_info:
