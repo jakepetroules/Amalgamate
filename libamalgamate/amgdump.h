@@ -29,11 +29,8 @@
 #include "dsstore.h"
 
 AMG_EXPORT AMG_EXTERN int amg_dump_file(const char *filename);
-AMG_EXPORT AMG_EXTERN int amg_dump_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
-AMG_EXPORT AMG_EXTERN int amg_dump_header_block(dsstore_header_block_t *header_block, FILE *file);
-AMG_EXPORT AMG_EXTERN int amg_dump_block(dsstore_buddy_allocator_state_t *allocator_state,
-                                         dsstore_header_block_t *header_block,
-                                         uint32_t block_number, FILE *file);
-AMG_EXPORT AMG_EXTERN int amg_dump_record(FILE *file);
+AMG_EXPORT AMG_EXTERN void amg_dump_record(ds_record_t *record);
+
+AMG_EXTERN CFStringRef AMGCopyRealDescription(CFTypeRef obj);
 
 #endif // AMALGAMATE_DUMP_H

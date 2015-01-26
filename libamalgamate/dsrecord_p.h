@@ -31,6 +31,7 @@
 
 struct _ds_record {
     _ds_record();
+    ~_ds_record();
 
     /*!
      * Filename, in big-endian UTF-16.
@@ -50,8 +51,10 @@ struct _ds_record {
 
     std::vector<unsigned char> data_blob;
     std::basic_string<uint16_t> data_ustr;
+    CFPropertyListRef data_plist;
     std::basic_string<uint16_t> data_plist_ustr;
 
+    void update_plist();
     void update_plist_ustr();
 };
 

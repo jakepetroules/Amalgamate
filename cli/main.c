@@ -30,9 +30,10 @@
 
 int main(int argc, const char * argv[])
 {
-    if (argc == 3 && strcmp(argv[1], "--dump") == 0)
-    {
+    if (argc == 3 && strcmp(argv[1], "--dump") == 0) {
         return amg_dump_file(argv[2]);
+    } else if (argc == 4 && strcmp(argv[1], "--convert") == 0) {
+        return amg_convert_file(argv[3], argv[2]);
     }
 
     return 0;

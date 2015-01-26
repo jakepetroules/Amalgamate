@@ -22,13 +22,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef Amalgamate_amg_h
-#define Amalgamate_amg_h
-
-#include "amgconvert.h"
 #include "amgdump.h"
-#include "dsio.h"
-#include "dsrecord.h"
-#include "dsstore.h"
+#include <Foundation/NSObject.h>
 
-#endif
+CFStringRef AMGCopyRealDescription(CFTypeRef obj) {
+    return (CFStringRef)CFBridgingRetain([(__bridge id)obj description]);
+}

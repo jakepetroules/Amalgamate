@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Petroules Corporation. All rights reserved.
+ * Copyright (c) 2015 Jake Petroules. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -43,51 +43,28 @@
 #include <stddef.h>
 #include <CoreServices/CoreServices.h>
 
+#ifdef __cplusplus
+#include <functional>
+#endif
+
 static const FourCharCode kDSHeaderMagic = FOUR_CHAR_CODE('Bud1');
 
-typedef struct {
-    uint32_t version;
-    FourCharCode magic;
+typedef struct _ds_record ds_record_t;
 
-    uint32_t allocator_offset; // "rootAddress"
-    uint32_t allocator_size;
-    uint32_t allocator_offset2; // "checkAddr"
-    uint8_t padding[16];
-} dsstore_header_t;
+typedef struct _ds_store ds_store_t;
+typedef void (*ds_store_record_func_t)(ds_record_t *record);
 
-void dsstore_header_init(dsstore_header_t *header);
+AMG_EXPORT AMG_EXTERN ds_store_t *ds_store_fread(FILE *file);
+AMG_EXPORT AMG_EXTERN ds_store_t *ds_store_create(void);
+AMG_EXPORT AMG_EXTERN void ds_store_free(ds_store_t *store);
+AMG_EXPORT AMG_EXTERN int ds_store_enum_records(ds_store_t *store, ds_store_record_func_t func);
 
-typedef struct {
-    uint32_t block_count;
-    uint32_t unknown;
-    uint32_t block_addresses[256 * sizeof(uint32_t)];
-    uint32_t directory_count;
-    struct {
-        uint8_t count;
-        uint8_t bytes[255];
-        uint32_t block_number;
-    } directory_entries[256];
-    struct {
-        uint32_t count;
-        uint32_t offsets[256];
-    } free_lists[32];
-} dsstore_buddy_allocator_state_t;
+#ifdef __cplusplus
+AMG_EXPORT AMG_EXTERN int ds_store_enum_records_core(ds_store_t *store, const std::function<void(ds_record_t *)> &func);
+#endif
 
-AMG_EXPORT AMG_EXTERN uint32_t dsstore_buddy_allocator_state_block_address_offset(uint32_t a);
-AMG_EXPORT AMG_EXTERN uint32_t dsstore_buddy_allocator_state_block_address_size(uint32_t a);
-
-typedef struct {
-    uint32_t root_block_number;
-    uint32_t node_levels;
-    uint32_t record_count;
-    uint32_t node_count;
-    uint32_t tree_node_page_size; // ??? always dsstore_header_block_tree_node_page_size
-} dsstore_header_block_t;
-
-static const uint32_t dsstore_header_block_tree_node_page_size = 0x1000;
-
-AMG_EXPORT AMG_EXTERN int amg_read_file(dsstore_header_t *header, FILE *file);
-AMG_EXPORT AMG_EXTERN int amg_read_allocator_state(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
-AMG_EXPORT AMG_EXTERN int amg_read_header_block(dsstore_header_block_t *header_block, FILE *file);
+AMG_EXPORT AMG_EXTERN void ds_store_dump_header(ds_store_t *store);
+AMG_EXPORT AMG_EXTERN void ds_store_dump_allocator_state(ds_store_t *store);
+AMG_EXPORT AMG_EXTERN void dsstore_header_dumpblock(ds_store_t *store);
 
 #endif

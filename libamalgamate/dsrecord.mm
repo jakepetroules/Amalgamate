@@ -25,6 +25,15 @@
 #include "dsrecord_p.h"
 #import <Foundation/Foundation.h>
 
+void _ds_record::update_plist() {
+    if (data_plist) {
+        CFRelease(data_plist);
+    }
+    CFDataRef cfdata = CFDataCreate(kCFAllocatorDefault, data_blob.data(), static_cast<CFIndex>(data_blob.size()));
+    data_plist = CFPropertyListCreateWithData(kCFAllocatorDefault, cfdata, 0, NULL, NULL);
+    CFRelease(cfdata);
+}
+
 void _ds_record::update_plist_ustr()
 {
 #if __has_feature(objc_arc)
@@ -32,7 +41,8 @@ void _ds_record::update_plist_ustr()
 #else
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 #endif
-    NSString *str = [[NSPropertyListSerialization propertyListWithData:[NSData dataWithBytes:data_blob.data() length:data_blob.size()] options:0 format:0 error:0] description];
+    update_plist();
+    NSString *str = [(__bridge id)data_plist description];
     if ([str length] > 0) {
         std::vector<uint16_t> bits;
         bits.resize([str length]);
@@ -46,6 +56,11 @@ void _ds_record::update_plist_ustr()
 #else
     [pool release];
 #endif
+}
+
+CFPropertyListRef ds_record_get_data_as_plist(ds_record_t *record) {
+    assert(record);
+    return record->data_plist;
 }
 
 void ds_record_copy_data_as_plist_ustr(ds_record_t *record, uint16_t *ustr)

@@ -98,6 +98,8 @@ typedef enum {
 AMG_EXPORT AMG_EXTERN ds_record_t *ds_record_create(void);
 AMG_EXPORT AMG_EXTERN void ds_record_free(ds_record_t *record);
 
+AMG_EXPORT AMG_EXTERN CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record);
+
 AMG_EXPORT AMG_EXTERN size_t ds_record_get_filename_len(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN void ds_record_copy_filename(ds_record_t *record, uint16_t *ustr);
 AMG_EXPORT AMG_EXTERN const uint16_t *ds_record_get_filename_ptr(ds_record_t *record);
@@ -121,6 +123,8 @@ AMG_EXPORT AMG_EXTERN size_t ds_record_get_data_as_ustr_len(ds_record_t *record)
 
 AMG_EXPORT AMG_EXTERN uint64_t ds_record_get_data_as_comp(ds_record_t *record);
 AMG_EXPORT AMG_EXTERN UTCDateTime ds_record_get_data_as_dutc(ds_record_t *record);
+
+AMG_EXPORT AMG_EXTERN CFPropertyListRef ds_record_get_data_as_plist(ds_record_t *record);
 
 AMG_EXPORT AMG_EXTERN void ds_record_copy_data_as_plist_ustr(ds_record_t *record, uint16_t *ustr);
 AMG_EXPORT AMG_EXTERN const uint16_t *ds_record_get_data_as_plist_ustr_ptr(ds_record_t *record);

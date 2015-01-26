@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Petroules Corporation. All rights reserved.
+ * Copyright (c) 2015 Jake Petroules. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -22,13 +22,22 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef Amalgamate_amg_h
-#define Amalgamate_amg_h
+#ifndef AMALGAMATE_MEMORY_H
+#define AMALGAMATE_MEMORY_H
 
-#include "amgconvert.h"
-#include "amgdump.h"
-#include "dsio.h"
-#include "dsrecord.h"
-#include "dsstore.h"
+#ifdef __cplusplus
+template <typename T>
+class AMCFTypeRef {
+    T _ptr;
+public:
+    AMCFTypeRef(T ptr = nullptr) : _ptr(ptr) { }
+    ~AMCFTypeRef() { if (_ptr) { CFRelease(_ptr); } }
+    T toCFType() const { return _ptr; }
+    operator T() const { return _ptr; }
+private:
+    AMCFTypeRef(const AMCFTypeRef &other);
+    AMCFTypeRef &operator=(const AMCFTypeRef &other);
+};
+#endif
 
 #endif

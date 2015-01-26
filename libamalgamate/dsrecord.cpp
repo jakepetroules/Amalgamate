@@ -24,10 +24,17 @@
 
 #include "dsio.h"
 #include "dsrecord_p.h"
+#include "amgmemory.h"
 
 _ds_record::_ds_record()
-: filename(), record_type(), data_type(), data(), data_blob(), data_ustr()
+: filename(), record_type(), data_type(), data(), data_blob(), data_ustr(), data_plist(), data_plist_ustr()
 {
+}
+
+_ds_record::~_ds_record() {
+    if (data_plist) {
+        CFRelease(data_plist);
+    }
 }
 
 ds_record_t *ds_record_create(void)
@@ -38,6 +45,219 @@ ds_record_t *ds_record_create(void)
 void ds_record_free(ds_record_t *record)
 {
     delete record;
+}
+
+CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
+{
+    CFMutableDictionaryRef dict = CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                            &kCFTypeDictionaryKeyCallBacks,
+                                                            &kCFTypeDictionaryValueCallBacks);
+    AMCFTypeRef<CFStringRef> str(CFStringCreateWithCharacters(kCFAllocatorDefault,
+                                                              ds_record_get_filename_ptr(record),
+                                                              static_cast<CFIndex>(ds_record_get_filename_len(record))));
+    CFDictionarySetValue(dict, CFSTR("filename"), str);
+
+    const uint32_t record_type_n = htonl(ds_record_get_type(record));
+    const char *record_type_ptr = reinterpret_cast<const char *>(&record_type_n);
+    AMCFTypeRef<CFStringRef> record_type_str(CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%c%c%c%c"),
+                                                                      record_type_ptr[0],
+                                                                      record_type_ptr[1],
+                                                                      record_type_ptr[2],
+                                                                      record_type_ptr[3]));
+    CFDictionarySetValue(dict, CFSTR("type"), record_type_str);
+
+    const uint32_t data_type_n = htonl(ds_record_get_data_type(record));
+    const char *data_type_ptr = reinterpret_cast<const char *>(&data_type_n);
+    AMCFTypeRef<CFStringRef> data_type_str(CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%c%c%c%c"),
+                                                                    data_type_ptr[0],
+                                                                    data_type_ptr[1],
+                                                                    data_type_ptr[2],
+                                                                    data_type_ptr[3]));
+    CFDictionarySetValue(dict, CFSTR("data_type"), data_type_str);
+
+    switch (ds_record_get_data_type(record)) {
+        case ds_record_data_type_long: {
+            const uint32_t value = ds_record_get_data_as_long(record);
+            AMCFTypeRef<CFNumberRef> number(CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &value));
+            CFDictionarySetValue(dict, CFSTR("data"), number);
+            break;
+        }
+        case ds_record_data_type_shor: {
+            const uint16_t value = ds_record_get_data_as_shor(record);
+            AMCFTypeRef<CFNumberRef> number(CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &value));
+            CFDictionarySetValue(dict, CFSTR("data"), number);
+            break;
+        }
+        case ds_record_data_type_bool: {
+            CFDictionarySetValue(dict, CFSTR("data"),
+                                 ds_record_get_data_as_bool(record)
+                                 ? kCFBooleanTrue
+                                 : kCFBooleanFalse);
+            break;
+        }
+        case ds_record_data_type_blob: {
+            const uint8_t *data = ds_record_get_data_as_blob_ptr(record);
+            size_t size = ds_record_get_data_as_blob_size(record);
+
+            if (ds_record_get_type(record) == ds_record_type_BKGD) {
+                if (size == 12) {
+                    AMCFTypeRef<CFMutableDictionaryRef> bkgd(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                                                       &kCFTypeDictionaryKeyCallBacks,
+                                                                                       &kCFTypeDictionaryValueCallBacks));
+
+                    const uint32_t BKGDtype = uint32_from_be(data);
+                    const uint32_t ClrB = FOUR_CHAR_CODE('ClrB'), PctB = FOUR_CHAR_CODE('PctB');
+
+                    data += 4;
+                    size -= 4;
+
+                    if (BKGDtype == ClrB) {
+                        const uint16_t r = uint16_from_be(data + 0);
+                        const uint16_t g = uint16_from_be(data + 2);
+                        const uint16_t b = uint16_from_be(data + 4);
+
+                        CFDictionarySetValue(bkgd, CFSTR("r"),
+                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                     kCFNumberShortType,
+                                                                                     &r)));
+                        CFDictionarySetValue(bkgd, CFSTR("g"),
+                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                     kCFNumberShortType,
+                                                                                     &g)));
+                        CFDictionarySetValue(bkgd, CFSTR("b"),
+                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                     kCFNumberShortType,
+                                                                                     &b)));
+
+                        data += 6;
+                        size -= 6;
+                    } else if (BKGDtype == PctB) {
+                        const uint32_t pict_len = uint32_from_be(data);
+                        data += 4;
+                        size -= 4;
+
+                        CFDictionarySetValue(bkgd, CFSTR("pict"),
+                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                     kCFNumberIntType,
+                                                                                     &pict_len)));
+                    }
+
+                    CFDictionarySetValue(dict, CFSTR("data"), bkgd);
+                } else {
+                    fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 12\n", reinterpret_cast<const char *>(&record_type_n), size);
+                }
+            } else if (ds_record_get_type(record) == ds_record_type_Iloc) {
+                if (size == 16) {
+                    const Iloc_t iconLocation = ds_record_get_data_as_Iloc(record);
+                    AMCFTypeRef<CFMutableDictionaryRef> iloc(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                                                       &kCFTypeDictionaryKeyCallBacks,
+                                                                                       &kCFTypeDictionaryValueCallBacks));
+                    CFDictionarySetValue(iloc, CFSTR("x"),
+                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                 kCFNumberIntType,
+                                                                                 &iconLocation.x)));
+                    CFDictionarySetValue(iloc, CFSTR("y"),
+                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                 kCFNumberIntType,
+                                                                                 &iconLocation.y)));
+                    CFDictionarySetValue(iloc, CFSTR("unknown"),
+                                         AMCFTypeRef<CFDataRef>(CFDataCreate(kCFAllocatorDefault,
+                                                                             iconLocation.unknown,
+                                                                             sizeof(iconLocation.unknown))));
+                    CFDictionarySetValue(dict, CFSTR("data"), iloc);
+                } else {
+                    fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 16\n", reinterpret_cast<const char *>(&record_type_n), size);
+                }
+            } else if (ds_record_get_type(record) == ds_record_type_fwi0) {
+                if (size == 16) {
+                    const fwi0_t windowInfo = ds_record_get_data_as_fwi0(record);
+                    const uint32_t view_n = htonl(windowInfo.view);
+                    const char *view_ptr = reinterpret_cast<const char *>(&view_n);
+
+                    AMCFTypeRef<CFMutableDictionaryRef> fwi0(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                                                       &kCFTypeDictionaryKeyCallBacks,
+                                                                                       &kCFTypeDictionaryValueCallBacks));
+
+                    CFDictionarySetValue(fwi0, CFSTR("top"),
+                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                 kCFNumberShortType,
+                                                                                 &windowInfo.top)));
+                    CFDictionarySetValue(fwi0, CFSTR("left"),
+                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                 kCFNumberShortType,
+                                                                                 &windowInfo.left)));
+                    CFDictionarySetValue(fwi0, CFSTR("bottom"),
+                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                 kCFNumberShortType,
+                                                                                 &windowInfo.bottom)));
+                    CFDictionarySetValue(fwi0, CFSTR("right"),
+                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                                 kCFNumberShortType,
+                                                                                 &windowInfo.right)));
+                    CFDictionarySetValue(fwi0, CFSTR("view"), AMCFTypeRef<CFStringRef>(CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%c%c%c%c"),
+                                                                                                                view_ptr[0],
+                                                                                                                view_ptr[1],
+                                                                                                                view_ptr[2],
+                                                                                                                view_ptr[3])));
+                    CFDictionarySetValue(fwi0, CFSTR("unknown"),
+                                         AMCFTypeRef<CFDataRef>(CFDataCreate(kCFAllocatorDefault,
+                                                                             windowInfo.unknown,
+                                                                             sizeof(windowInfo.unknown))));
+                    CFDictionarySetValue(dict, CFSTR("data"), fwi0);
+                } else {
+                    fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 16\n", reinterpret_cast<const char *>(&record_type_n), size);
+                }
+            } else {
+                CFPropertyListRef plist = ds_record_get_data_as_plist(record);
+                if (plist) {
+                    CFDictionarySetValue(dict, CFSTR("data"), plist);
+                } else {
+                    AMCFTypeRef<CFDataRef> cfdata(CFDataCreate(kCFAllocatorDefault,
+                                                               ds_record_get_data_as_blob_ptr(record),
+                                                               static_cast<CFIndex>(ds_record_get_data_as_blob_size(record))));
+                    CFDictionarySetValue(dict, CFSTR("data"), cfdata);
+                }
+            }
+            break;
+        }
+        case ds_record_data_type_type: {
+            const uint32_t type = htonl(ds_record_get_data_as_type(record));
+            const char *type_ptr = reinterpret_cast<const char *>(&type);
+            AMCFTypeRef<CFStringRef> type_str(CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%c%c%c%c"),
+                                                                       type_ptr[0],
+                                                                       type_ptr[1],
+                                                                       type_ptr[2],
+                                                                       type_ptr[3]));
+            CFDictionarySetValue(dict, CFSTR("data"), type_str);
+            break;
+        }
+        case ds_record_data_type_ustr: {
+            AMCFTypeRef<CFStringRef> string(CFStringCreateWithCharacters(kCFAllocatorDefault,
+                                                                         ds_record_get_data_as_ustr_ptr(record),
+                                                                         static_cast<CFIndex>(ds_record_get_data_as_ustr_len(record))));
+            CFDictionarySetValue(dict, CFSTR("data"), string);
+            break;
+        }
+        case ds_record_data_type_comp: {
+            const uint64_t value = ds_record_get_data_as_comp(record);
+            AMCFTypeRef<CFNumberRef> number(CFNumberCreate(kCFAllocatorDefault, kCFNumberLongLongType, &value));
+            CFDictionarySetValue(dict, CFSTR("data"), number);
+            break;
+        }
+        case ds_record_data_type_dutc: {
+            const UTCDateTime value = ds_record_get_data_as_dutc(record);
+            CFAbsoluteTime cfvalue = DBL_MIN;
+            if (UCConvertUTCDateTimeToCFAbsoluteTime(&value, &cfvalue) != noErr) {
+                fprintf(stderr, "error converting UTCDateTime to CFAbsoluteTime");
+                return nullptr;
+            }
+            AMCFTypeRef<CFDateRef> date(CFDateCreate(kCFAllocatorDefault, cfvalue));
+            CFDictionarySetValue(dict, CFSTR("data"), date);
+            break;
+        }
+    }
+
+    return dict;
 }
 
 size_t ds_record_get_filename_len(ds_record_t *record)

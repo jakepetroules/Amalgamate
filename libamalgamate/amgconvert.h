@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Petroules Corporation. All rights reserved.
+ * Copyright (c) 2015 Jake Petroules. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -22,13 +22,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef Amalgamate_amg_h
-#define Amalgamate_amg_h
+#ifndef AMALGAMATE_CONVERT_H
+#define AMALGAMATE_CONVERT_H
 
-#include "amgconvert.h"
-#include "amgdump.h"
-#include "dsio.h"
-#include "dsrecord.h"
+#include <stdio.h>
 #include "dsstore.h"
 
-#endif
+AMG_EXPORT AMG_EXTERN int amg_convert_file(const char *filename, const char *format);
+
+#endif // AMALGAMATE_CONVERT_H

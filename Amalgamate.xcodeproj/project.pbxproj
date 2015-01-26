@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140D7B171A75FC96006C224C /* amgdump.m in Sources */ = {isa = PBXBuildFile; fileRef = 140D7B161A75FB25006C224C /* amgdump.m */; };
+		140D7B191A761B55006C224C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 140D7B181A761B55006C224C /* Carbon.framework */; };
+		140D7B1A1A761B5F006C224C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDEDD19299FA9008758F2 /* Foundation.framework */; };
+		140D7B1C1A761B5F006C224C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 140D7B1B1A761B5F006C224C /* CoreFoundation.framework */; };
+		140D7B1D1A762440006C224C /* amgmemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 140D7B151A75F187006C224C /* amgmemory.h */; };
+		140D7B1E1A76244B006C224C /* dsio.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FB519AA9B0A00959E44 /* dsio.h */; };
+		140D7B201A762A17006C224C /* dsstore_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 140D7B1F1A762A17006C224C /* dsstore_p.h */; };
 		14652FA919AA809600959E44 /* libamalgamate.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		14652FAA19AA815000959E44 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
 		14652FAC19AA816100959E44 /* libamalgamate.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -20,6 +27,8 @@
 		147C5D9D1A5AF67900EBFD90 /* Xcode6b6.DS_Store in Resources */ = {isa = PBXBuildFile; fileRef = 14E8ED3419AB01DC00E56E54 /* Xcode6b6.DS_Store */; };
 		147C5DA01A5AF7C000EBFD90 /* amgdump.c in Sources */ = {isa = PBXBuildFile; fileRef = 147C5D9E1A5AF7C000EBFD90 /* amgdump.c */; };
 		147C5DA11A5AF7C000EBFD90 /* amgdump.h in Headers */ = {isa = PBXBuildFile; fileRef = 147C5D9F1A5AF7C000EBFD90 /* amgdump.h */; };
+		147C5DA41A5B84E000EBFD90 /* amgconvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 147C5DA21A5B84E000EBFD90 /* amgconvert.cpp */; };
+		147C5DA51A5B84E000EBFD90 /* amgconvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 147C5DA31A5B84E000EBFD90 /* amgconvert.h */; };
 		14B550D519D3DA560042C966 /* dsrecord.mm in Sources */ = {isa = PBXBuildFile; fileRef = 14B550D419D3DA560042C966 /* dsrecord.mm */; };
 		14B550D719D3DAF40042C966 /* dsrecord_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B550D619D3DAF40042C966 /* dsrecord_p.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		14DBDED919299FA9008758F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDED819299FA9008758F2 /* Cocoa.framework */; };
@@ -37,7 +46,7 @@
 		14DBDF1619299FE6008758F2 /* amalgamate.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1519299FE6008758F2 /* amalgamate.1 */; };
 		14DBDF221929A10F008758F2 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
 		14DBDF271929A122008758F2 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
-		14DBDF2A1929A211008758F2 /* dsstore.c in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF291929A211008758F2 /* dsstore.c */; };
+		14DBDF2A1929A211008758F2 /* dsstore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF291929A211008758F2 /* dsstore.cpp */; };
 		14DBDF2C1929A21F008758F2 /* dsstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 14DBDF2B1929A21F008758F2 /* dsstore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		14DBDF2E192A8043008758F2 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 14DBDF2D192A8043008758F2 /* main.c */; };
 /* End PBXBuildFile section */
@@ -100,6 +109,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		140D7B151A75F187006C224C /* amgmemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = amgmemory.h; sourceTree = "<group>"; };
+		140D7B161A75FB25006C224C /* amgdump.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = amgdump.m; sourceTree = "<group>"; };
+		140D7B181A761B55006C224C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		140D7B1B1A761B5F006C224C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		140D7B1F1A762A17006C224C /* dsstore_p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsstore_p.h; sourceTree = "<group>"; };
 		14652FAD19AA82FC00959E44 /* dsrecord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsrecord.cpp; sourceTree = "<group>"; };
 		14652FAE19AA82FC00959E44 /* dsrecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsrecord.h; sourceTree = "<group>"; };
 		14652FB119AA848100959E44 /* amgexport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amgexport.h; sourceTree = "<group>"; };
@@ -107,6 +121,8 @@
 		14652FB519AA9B0A00959E44 /* dsio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dsio.h; sourceTree = "<group>"; };
 		147C5D9E1A5AF7C000EBFD90 /* amgdump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = amgdump.c; sourceTree = "<group>"; };
 		147C5D9F1A5AF7C000EBFD90 /* amgdump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amgdump.h; sourceTree = "<group>"; };
+		147C5DA21A5B84E000EBFD90 /* amgconvert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = amgconvert.cpp; sourceTree = "<group>"; };
+		147C5DA31A5B84E000EBFD90 /* amgconvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amgconvert.h; sourceTree = "<group>"; };
 		14B550D419D3DA560042C966 /* dsrecord.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = dsrecord.mm; sourceTree = "<group>"; };
 		14B550D619D3DAF40042C966 /* dsrecord_p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsrecord_p.h; sourceTree = "<group>"; };
 		14DBDED519299FA9008758F2 /* Amalgamate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalgamate.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,7 +148,7 @@
 		14DBDF1119299FE5008758F2 /* amalgamate */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = amalgamate; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBDF1519299FE6008758F2 /* amalgamate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = amalgamate.1; sourceTree = "<group>"; };
 		14DBDF1E1929A032008758F2 /* libamalgamate.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libamalgamate.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		14DBDF291929A211008758F2 /* dsstore.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsstore.c; sourceTree = "<group>"; };
+		14DBDF291929A211008758F2 /* dsstore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsstore.cpp; sourceTree = "<group>"; };
 		14DBDF2B1929A21F008758F2 /* dsstore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsstore.h; sourceTree = "<group>"; };
 		14DBDF2D192A8043008758F2 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		14E8ED3219AAC7ED00E56E54 /* AmalgamateTests.DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmalgamateTests.DS_Store; sourceTree = "<group>"; };
@@ -173,6 +189,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				140D7B191A761B55006C224C /* Carbon.framework in Frameworks */,
+				140D7B1C1A761B5F006C224C /* CoreFoundation.framework in Frameworks */,
+				140D7B1A1A761B5F006C224C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +224,8 @@
 		14DBDED719299FA9008758F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				140D7B1B1A761B5F006C224C /* CoreFoundation.framework */,
+				140D7B181A761B55006C224C /* Carbon.framework */,
 				14DBDED819299FA9008758F2 /* Cocoa.framework */,
 				14DBDEFA19299FA9008758F2 /* XCTest.framework */,
 				14DBDEDA19299FA9008758F2 /* Other Frameworks */,
@@ -281,15 +302,20 @@
 			isa = PBXGroup;
 			children = (
 				14652FB319AA8ACA00959E44 /* amg.h */,
+				147C5DA21A5B84E000EBFD90 /* amgconvert.cpp */,
+				147C5DA31A5B84E000EBFD90 /* amgconvert.h */,
 				147C5D9E1A5AF7C000EBFD90 /* amgdump.c */,
 				147C5D9F1A5AF7C000EBFD90 /* amgdump.h */,
+				140D7B161A75FB25006C224C /* amgdump.m */,
 				14652FB119AA848100959E44 /* amgexport.h */,
+				140D7B151A75F187006C224C /* amgmemory.h */,
 				14652FAD19AA82FC00959E44 /* dsrecord.cpp */,
 				14652FAE19AA82FC00959E44 /* dsrecord.h */,
 				14B550D419D3DA560042C966 /* dsrecord.mm */,
 				14B550D619D3DAF40042C966 /* dsrecord_p.h */,
-				14DBDF291929A211008758F2 /* dsstore.c */,
+				14DBDF291929A211008758F2 /* dsstore.cpp */,
 				14DBDF2B1929A21F008758F2 /* dsstore.h */,
+				140D7B1F1A762A17006C224C /* dsstore_p.h */,
 				14652FB519AA9B0A00959E44 /* dsio.h */,
 			);
 			name = Library;
@@ -315,11 +341,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				14652FB419AA8ACA00959E44 /* amg.h in Headers */,
+				147C5DA51A5B84E000EBFD90 /* amgconvert.h in Headers */,
+				140D7B1E1A76244B006C224C /* dsio.h in Headers */,
 				14652FB019AA82FC00959E44 /* dsrecord.h in Headers */,
 				147C5DA11A5AF7C000EBFD90 /* amgdump.h in Headers */,
 				14DBDF2C1929A21F008758F2 /* dsstore.h in Headers */,
 				14B550D719D3DAF40042C966 /* dsrecord_p.h in Headers */,
 				14652FB219AA848100959E44 /* amgexport.h in Headers */,
+				140D7B201A762A17006C224C /* dsstore_p.h in Headers */,
+				140D7B1D1A762440006C224C /* amgmemory.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,10 +520,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14DBDF2A1929A211008758F2 /* dsstore.c in Sources */,
+				147C5DA41A5B84E000EBFD90 /* amgconvert.cpp in Sources */,
+				14DBDF2A1929A211008758F2 /* dsstore.cpp in Sources */,
 				147C5DA01A5AF7C000EBFD90 /* amgdump.c in Sources */,
 				14652FAF19AA82FC00959E44 /* dsrecord.cpp in Sources */,
 				14B550D519D3DA560042C966 /* dsrecord.mm in Sources */,
+				140D7B171A75FC96006C224C /* amgdump.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,7 +728,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -742,7 +774,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Amalgamate/Amalgamate-Prefix.pch";
@@ -782,7 +814,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -833,7 +865,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Amalgamate/Amalgamate-Prefix.pch";
@@ -860,7 +892,6 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -870,7 +901,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -897,7 +928,6 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -909,7 +939,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -928,7 +958,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -940,7 +969,7 @@
 				COPY_PHASE_STRIP = NO;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -967,7 +996,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -981,7 +1009,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
