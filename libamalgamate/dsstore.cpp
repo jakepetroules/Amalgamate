@@ -44,6 +44,11 @@ private:
 _ds_store::_ds_store()
     : file()
 {
+    header.version = 1;
+    header.magic = kDSHeaderMagic;
+    header.allocator_offset = 0;
+    header.allocator_size = 0;
+    header.allocator_offset_check = 0;
 }
 
 ds_store_t *ds_store_fread(FILE *file)
