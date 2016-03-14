@@ -61,7 +61,7 @@ ds_store_t *ds_store_fread(FILE *file)
         return nullptr;
     }
 
-    if (fseek(file, static_cast<long>(sizeof(store->header.version) + store->header.allocator_offset), SEEK_SET) != 0) {
+    if (ds_store_seek_buddy_allocator(store, file) != 0) {
         fprintf(stderr, "could not seek to buddy allocator offset\n");
         return nullptr;
     }
@@ -116,6 +116,11 @@ ds_store_t *ds_store_create(void)
 void ds_store_free(ds_store_t *store)
 {
     delete store;
+}
+
+int ds_store_seek_buddy_allocator(ds_store_t *store, FILE *file)
+{
+    return fseek(file, static_cast<long>(sizeof(store->header.version) + store->header.allocator_offset), SEEK_SET);
 }
 
 int ds_store_enum_blocks_core(dsstore_buddy_allocator_state_t *allocator, dsstore_header_block_t *header_block, uint32_t block_number, const std::function<void(ds_record_t *)> &record_func, FILE *file)
