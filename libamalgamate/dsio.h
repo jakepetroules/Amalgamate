@@ -86,4 +86,35 @@ inline static size_t fread_uint64_be(uint64_t *value, FILE *file)
     return count;
 }
 
+inline static size_t fwrite_uint8(const uint8_t *value, FILE *file)
+{
+    assert(value);
+    assert(file);
+    return fwrite(value, sizeof(*value), 1, file);
+}
+
+inline static size_t fwrite_uint16_be(const uint16_t *value, FILE *file)
+{
+    assert(value);
+    assert(file);
+    const uint16_t value_n = htons(*value);
+    return fwrite(&value_n, sizeof(value_n), 1, file);
+}
+
+inline static size_t fwrite_uint32_be(const uint32_t *value, FILE *file)
+{
+    assert(value);
+    assert(file);
+    const uint32_t value_n = htonl(*value);
+    return fwrite(&value_n, sizeof(value_n), 1, file);
+}
+
+inline static size_t fwrite_uint64_be(uint64_t *value, FILE *file)
+{
+    assert(value);
+    assert(file);
+    const uint64_t value_n = htonll(*value);
+    return fwrite(&value_n, sizeof(value_n), 1, file);
+}
+
 #endif
