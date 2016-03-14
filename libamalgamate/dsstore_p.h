@@ -69,7 +69,9 @@ static const uint32_t dsstore_header_block_tree_node_page_size = 0x1000;
 AMG_EXPORT AMG_EXTERN int ds_store_seek_buddy_allocator(ds_store_t *store, FILE *file);
 
 AMG_EXPORT AMG_EXTERN int dsstore_header_fread(dsstore_header_t *header, FILE *file);
+AMG_EXPORT AMG_EXTERN int dsstore_header_fwrite(dsstore_header_t *header, FILE *file);
 AMG_EXPORT AMG_EXTERN int dsstore_buddy_allocator_state_fread(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
+AMG_EXPORT AMG_EXTERN int dsstore_buddy_allocator_state_fwrite(dsstore_buddy_allocator_state_t *allocator_state, FILE *file);
 AMG_EXPORT AMG_EXTERN int dsstore_header_block_fread(dsstore_header_block_t *header_block, FILE *file);
 
 // Debugging

@@ -55,6 +55,7 @@ typedef struct _ds_store ds_store_t;
 typedef void (*ds_store_record_func_t)(ds_record_t *record);
 
 AMG_EXPORT AMG_EXTERN ds_store_t *ds_store_fread(FILE *file);
+AMG_EXPORT AMG_EXTERN int ds_store_fwrite(ds_store_t *store, FILE *file);
 AMG_EXPORT AMG_EXTERN ds_store_t *ds_store_create(void);
 AMG_EXPORT AMG_EXTERN void ds_store_free(ds_store_t *store);
 AMG_EXPORT AMG_EXTERN int ds_store_enum_records(ds_store_t *store, ds_store_record_func_t func);

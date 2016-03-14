@@ -108,6 +108,24 @@ ds_store_t *ds_store_fread(FILE *file)
     return store;
 }
 
+int ds_store_fwrite(ds_store_t *store, FILE *file) {
+    if (dsstore_header_fwrite(&store->header, file) != 0) {
+        return 1;
+    }
+
+    if (ds_store_seek_buddy_allocator(store, file) != 0) {
+        fprintf(stderr, "could not seek to buddy allocator offset\n");
+        return 1;
+    }
+
+    if (dsstore_buddy_allocator_state_fwrite(&store->allocator, file) != 0) {
+        return 1;
+    }
+
+    fprintf(stderr, "NOT YET IMPLEMENTED\n");
+    return 1;
+}
+
 ds_store_t *ds_store_create(void)
 {
     return new _ds_store();
@@ -388,6 +406,47 @@ int dsstore_header_fread(dsstore_header_t *header, FILE *file)
     return 0;
 }
 
+int dsstore_header_fwrite(dsstore_header_t *header, FILE *file)
+{
+    assert(header);
+    assert(file);
+
+    if (fwrite_uint32_be(&header->version, file) != 1) {
+        fprintf(stderr, "error writing version\n");
+        return 1;
+    }
+
+    const uint32_t magic = static_cast<uint32_t>(header->magic);
+    if (fwrite_uint32_be(&magic, file) != 1) {
+        fprintf(stderr, "error writing magic\n");
+        return 1;
+    }
+
+    if (fwrite_uint32_be(&header->allocator_offset, file) != 1) {
+        fprintf(stderr, "error writing allocator offset\n");
+        return 1;
+    }
+
+    if (fwrite_uint32_be(&header->allocator_size, file) != 1) {
+        fprintf(stderr, "error writing allocator size\n");
+        return 1;
+    }
+
+    if (fwrite_uint32_be(&header->allocator_offset_check, file) != 1) {
+        fprintf(stderr, "error writing allocator offset copy\n");
+        return 1;
+    }
+
+    const size_t unknown_size = sizeof(header->padding);
+    size_t n;
+    if ((n = fwrite(&header->padding, sizeof(header->padding[0]), unknown_size, file)) != unknown_size) {
+        fprintf(stderr, "error writing unknown header bytes\n");
+        return 1;
+    }
+
+    return 0;
+}
+
 int dsstore_buddy_allocator_state_fread(dsstore_buddy_allocator_state_t *allocator_state, FILE *file)
 {
     assert(allocator_state);
@@ -455,6 +514,70 @@ int dsstore_buddy_allocator_state_fread(dsstore_buddy_allocator_state_t *allocat
         for (size_t j = 0; j < allocator_state->free_lists[i].count; ++j) {
             if (fread_uint32_be(&allocator_state->free_lists[i].offsets[j], file) != 1) {
                 fprintf(stderr, "error reading allocator free list #%zu offset #%zu\n", i, j);
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
+int dsstore_buddy_allocator_state_fwrite(dsstore_buddy_allocator_state_t *allocator_state, FILE *file)
+{
+    assert(allocator_state);
+    assert(file);
+
+    if (fwrite_uint32_be(&allocator_state->block_count, file) != 1)
+    {
+        fprintf(stderr, "error writing allocator block count\n");
+        return 1;
+    }
+
+    if (fwrite_uint32_be(&allocator_state->unknown, file) != 1)
+    {
+        fprintf(stderr, "error writing allocator ????\n");
+        return 1;
+    }
+
+    for (size_t i = 0; i < 256; ++i) {
+        if (fwrite_uint32_be(&allocator_state->block_addresses[i], file) != 1) {
+            fprintf(stderr, "error writing allocator block address #%zu\n", i);
+            return 1;
+        }
+    }
+
+    if (fwrite_uint32_be(&allocator_state->directory_count, file) != 1) {
+        fprintf(stderr, "error writing allocator directory count\n");
+        return 1;
+    }
+
+    for (size_t i = 0; i < allocator_state->directory_count; ++i) {
+        if (fwrite_uint8(&allocator_state->directory_entries[i].count, file) != 1) {
+            fprintf(stderr, "error writing allocator directory entry #%zu data size\n", i);
+            return 1;
+        }
+
+        if (fwrite(&allocator_state->directory_entries[i].bytes, sizeof(allocator_state->directory_entries[i].bytes[0]), allocator_state->directory_entries[i].count, file) != allocator_state->directory_entries[i].count) {
+            fprintf(stderr, "error writing allocator directory entry #%zu data\n", i);
+            return 1;
+        }
+
+        if (fwrite_uint32_be(&allocator_state->directory_entries[i].block_number, file) != 1) {
+            fprintf(stderr, "error writing allocator directory entry #%zu block number\n", i);
+            return 1;
+        }
+    }
+
+    const size_t free_list_count = sizeof(allocator_state->free_lists) / sizeof(allocator_state->free_lists[0]);
+    for (size_t i = 0; i < free_list_count; ++i) {
+        if (fwrite_uint32_be(&allocator_state->free_lists[i].count, file) != 1) {
+            fprintf(stderr, "error writing allocator free list #%zu offset count\n", i);
+            return 1;
+        }
+
+        for (size_t j = 0; j < allocator_state->free_lists[i].count; ++j) {
+            if (fwrite_uint32_be(&allocator_state->free_lists[i].offsets[j], file) != 1) {
+                fprintf(stderr, "error writing allocator free list #%zu offset #%zu\n", i, j);
                 return 1;
             }
         }
