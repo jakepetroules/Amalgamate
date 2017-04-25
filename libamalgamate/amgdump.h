@@ -33,4 +33,6 @@ AMG_EXPORT AMG_EXTERN void amg_dump_record(ds_record_t *record);
 
 AMG_EXTERN CFStringRef AMGCopyRealDescription(CFTypeRef obj);
 
+AMG_EXTERN CFPropertyListRef amg_ds_record_copy_icvp_display_plist(CFPropertyListRef plist);
+
 #endif // AMALGAMATE_DUMP_H

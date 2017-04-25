@@ -137,6 +137,52 @@ AMG_EXPORT AMG_EXTERN Iloc_t ds_record_get_data_as_Iloc(ds_record_t *record);
 typedef struct { uint16_t top, left, bottom, right; uint32_t view; unsigned char unknown[4]; } fwi0_t;
 AMG_EXPORT AMG_EXTERN fwi0_t ds_record_get_data_as_fwi0(ds_record_t *record);
 
+typedef struct {
+    uint32_t creator_code;
+    uint16_t record_size;
+    uint16_t version;
+    uint16_t alias_kind;
+    struct {
+        uint8_t length;
+        char data[27];
+        char padding[2]; // unused
+    } volume_name;
+    uint32_t volume_date;
+    uint16_t filesystem_type;
+    uint16_t disk_type;
+    uint32_t containing_folder_cnid;
+    struct {
+        uint8_t length;
+        char data[63];
+    } target_name;
+    uint32_t target_cnid;
+    uint32_t target_creation_date;
+    uint32_t target_creator_code;
+    uint32_t target_type_code;
+    int16_t alias_to_root_directory_depth;
+    int16_t root_to_target_directory_depth;
+    uint32_t volume_attributes;
+    uint16_t volume_fsid;
+    unsigned char reserved[10]; // all zeros
+    uint32_t metadata_count;
+    struct {
+        uint16_t tag;
+        uint16_t length;
+        unsigned char value[255]; // metadata entry value is naturally limited to 65535
+        unsigned char padding; // unused
+    } metadata_entries[255];
+    // API is limited to 255 metadata entries for now; theoretical limit is 16346 because the
+    // overall record size is a uint16, so 65535 bytes, minus the initial 150 bytes prior to the
+    // metadata entries minus 16346 * 4 bytes (16346 entries each with a zero-length value) equals
+    // 1 byte remaining. Limiting to 255 entries makes the structure size about 16 MB rather than
+    // about 1 GB.
+} pict_t;
+
+AMG_EXPORT AMG_EXTERN pict_t _ds_get_data_as_pict(const unsigned char *data, size_t len);
+AMG_EXPORT AMG_EXTERN CFDictionaryRef _pict_record_copy_dictionary(const pict_t *pictRecord);
+
+AMG_EXPORT AMG_EXTERN pict_t ds_record_get_data_as_pict(ds_record_t *record);
+
 #ifdef __cplusplus
 AMG_EXPORT extern std::basic_string<uint16_t> ds_record_get_filename(ds_record_t *record);
 AMG_EXPORT extern std::vector<unsigned char> ds_record_get_data_as_blob(ds_record_t *record);

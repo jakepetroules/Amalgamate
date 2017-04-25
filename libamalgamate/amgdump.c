@@ -77,3 +77,18 @@ void amg_dump_record(ds_record_t *record) {
     CFRelease(description);
     CFRelease(dict);
 }
+
+CFPropertyListRef amg_ds_record_copy_icvp_display_plist(CFPropertyListRef plist)
+{
+    if (!plist || CFGetTypeID(plist) != CFDictionaryGetTypeID())
+        return NULL;
+
+    CFMutableDictionaryRef plistCopy = CFDictionaryCreateMutableCopy(kCFAllocatorDefault, 0, plist);
+    CFDataRef backgroundImageAlias = (CFDataRef)CFDictionaryGetValue((CFDictionaryRef)plist, CFSTR("backgroundImageAlias"));
+    if (backgroundImageAlias && CFGetTypeID(backgroundImageAlias) == CFDataGetTypeID()) {
+        const pict_t bgPict = _ds_get_data_as_pict((const unsigned char *)CFDataGetBytePtr(backgroundImageAlias), (size_t)CFDataGetLength(backgroundImageAlias));
+        CFDictionarySetValue(plistCopy, CFSTR("backgroundImageAlias"), _pict_record_copy_dictionary(&bgPict));
+    }
+
+    return plistCopy;
+}

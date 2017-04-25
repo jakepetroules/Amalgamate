@@ -26,6 +26,9 @@
 #include "dsrecord_p.h"
 #include "amgmemory.h"
 
+// HACK
+#include "amgdump.h"
+
 _ds_record::_ds_record()
 : filename(), record_type(), data_type(), data(), data_blob(), data_ustr(), data_plist(), data_plist_ustr()
 {
@@ -45,6 +48,167 @@ ds_record_t *ds_record_create(void)
 void ds_record_free(ds_record_t *record)
 {
     delete record;
+}
+
+static void AMGCFDictionarySetFourCCValue(CFMutableDictionaryRef dict, CFStringRef key, uint32_t value)
+{
+    const uint32_t value_n = htonl(value);
+    const char *value_ptr = reinterpret_cast<const char *>(&value_n);
+
+    CFDictionarySetValue(dict, key,
+                         AMCFTypeRef<CFStringRef>(CFStringCreateWithFormat(kCFAllocatorDefault,
+                                                                           NULL, CFSTR("%c%c%c%c"),
+                                                                           value_ptr[0],
+                                                                           value_ptr[1],
+                                                                           value_ptr[2],
+                                                                           value_ptr[3])));
+}
+
+static void AMGCFDictionarySetShortValue(CFMutableDictionaryRef dict, CFStringRef key, uint16_t value)
+{
+    CFDictionarySetValue(dict, key,
+                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                 kCFNumberShortType,
+                                                                 &value)));
+
+}
+
+static void AMGCFDictionarySetSShortValue(CFMutableDictionaryRef dict, CFStringRef key, int16_t value)
+{
+    CFDictionarySetValue(dict, key,
+                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                 kCFNumberShortType,
+                                                                 &value)));
+
+}
+
+static void AMGCFDictionarySetIntValue(CFMutableDictionaryRef dict, CFStringRef key, uint32_t value)
+{
+    CFDictionarySetValue(dict, key,
+                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                 kCFNumberIntType,
+                                                                 &value)));
+
+}
+
+static CFStringRef AMGCFStringCreateCString(const char *s, size_t len)
+{
+    return CFStringCreateWithBytes(kCFAllocatorDefault,
+                                   reinterpret_cast<const UInt8 *>(s),
+                                   static_cast<CFIndex>(len),
+                                   kCFStringEncodingMacRoman, 0);
+}
+
+static CFStringRef AMGCFStringCreateHFSString(const char *s, size_t len)
+{
+    return CFStringCreateWithBytes(kCFAllocatorDefault,
+                                   reinterpret_cast<const UInt8 *>(s),
+                                   static_cast<CFIndex>(len),
+                                   kCFStringEncodingMacHFS, 0);
+}
+
+static void AMGCFDictionarySetCStringValue(CFMutableDictionaryRef dict, CFStringRef key, const char *s, size_t len)
+{
+    CFDictionarySetValue(dict, key, AMCFTypeRef<CFStringRef>(AMGCFStringCreateCString(s, len)));
+}
+
+static void AMGCFDictionarySetHFSStringValue(CFMutableDictionaryRef dict, CFStringRef key, const char *s, size_t len)
+{
+    CFDictionarySetValue(dict, key, AMCFTypeRef<CFStringRef>(AMGCFStringCreateHFSString(s, len)));
+}
+
+static void AMGCFDictionarySetMacDateValue(CFMutableDictionaryRef dict, CFStringRef key, uint32_t value)
+{
+    CFDictionarySetValue(dict, key, AMCFTypeRef<CFDateRef>(CFDateCreate(kCFAllocatorDefault, value - kCFAbsoluteTimeIntervalSince1904)));
+}
+
+static void AMGCFDictionarySetUTCDateValue(CFMutableDictionaryRef dict, CFStringRef key, const UTCDateTime *dt)
+{
+    CFAbsoluteTime cftime;
+    UCConvertUTCDateTimeToCFAbsoluteTime(dt, &cftime);
+    CFDictionarySetValue(dict, key, AMCFTypeRef<CFDateRef>(CFDateCreate(kCFAllocatorDefault, cftime)));
+}
+
+CFDictionaryRef _pict_record_copy_dictionary(const pict_t *pictRecord)
+{
+    CFMutableDictionaryRef pict(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                          &kCFTypeDictionaryKeyCallBacks,
+                                                          &kCFTypeDictionaryValueCallBacks));
+
+    AMGCFDictionarySetFourCCValue(pict, CFSTR("creator_code"), pictRecord->creator_code);
+    AMGCFDictionarySetShortValue(pict, CFSTR("record_size"), pictRecord->record_size);
+    AMGCFDictionarySetShortValue(pict, CFSTR("version"), pictRecord->version);
+    AMGCFDictionarySetShortValue(pict, CFSTR("alias_kind"), pictRecord->alias_kind);
+    AMGCFDictionarySetCStringValue(pict, CFSTR("volume_name"),
+                                   pictRecord->volume_name.data,
+                                   pictRecord->volume_name.length);
+    AMGCFDictionarySetMacDateValue(pict, CFSTR("volume_date"), pictRecord->volume_date);
+
+    const uint16_t filesystem_type_n = htons(pictRecord->filesystem_type);
+    AMGCFDictionarySetCStringValue(pict, CFSTR("filesystem_type"), reinterpret_cast<const char *>(&filesystem_type_n), sizeof(filesystem_type_n));
+
+    AMGCFDictionarySetShortValue(pict, CFSTR("disk_type"), pictRecord->disk_type);
+    AMGCFDictionarySetIntValue(pict, CFSTR("containing_folder_cnid"), pictRecord->containing_folder_cnid);
+    AMGCFDictionarySetCStringValue(pict, CFSTR("target_name"), reinterpret_cast<const char *>(pictRecord->target_name.data), pictRecord->target_name.length);
+    AMGCFDictionarySetIntValue(pict, CFSTR("target_cnid"), pictRecord->target_cnid);
+    AMGCFDictionarySetMacDateValue(pict, CFSTR("target_creation_date"), pictRecord->target_creation_date);
+    AMGCFDictionarySetFourCCValue(pict, CFSTR("target_creator_code"), pictRecord->target_creator_code);
+    AMGCFDictionarySetIntValue(pict, CFSTR("target_type_code"), pictRecord->target_type_code);
+    AMGCFDictionarySetSShortValue(pict, CFSTR("alias_to_root_directory_depth"), pictRecord->alias_to_root_directory_depth);
+    AMGCFDictionarySetSShortValue(pict, CFSTR("root_to_target_directory_depth"), pictRecord->root_to_target_directory_depth);
+    AMGCFDictionarySetIntValue(pict, CFSTR("volume_attributes"), pictRecord->volume_attributes);
+    AMGCFDictionarySetShortValue(pict, CFSTR("volume_fsid"), pictRecord->volume_fsid);
+
+    CFMutableArrayRef metadataItems = CFArrayCreateMutable(kCFAllocatorDefault,
+                                                           static_cast<CFIndex>(pictRecord->metadata_count),
+                                                           &kCFTypeArrayCallBacks);
+
+    for (size_t i = 0; i < pictRecord->metadata_count; ++i) {
+        AMCFTypeRef<CFMutableDictionaryRef> metadata(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                                               &kCFTypeDictionaryKeyCallBacks,
+                                                                               &kCFTypeDictionaryValueCallBacks));
+        AMGCFDictionarySetShortValue(metadata, CFSTR("tag"), pictRecord->metadata_entries[i].tag);
+
+        switch (pictRecord->metadata_entries[i].tag) {
+            case 0:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 18:
+            case 19:
+                AMGCFDictionarySetCStringValue(metadata, CFSTR("value"), reinterpret_cast<const char *>(pictRecord->metadata_entries[i].value), static_cast<size_t>(pictRecord->metadata_entries[i].length));
+                break;
+            case 14:
+            case 15:
+                // offset by 2 bytes (string length)
+                AMGCFDictionarySetHFSStringValue(metadata, CFSTR("value"), reinterpret_cast<const char *>(pictRecord->metadata_entries[i].value + 2), static_cast<size_t>(pictRecord->metadata_entries[i].length));
+                break;
+            case 16:
+            case 17:
+                AMGCFDictionarySetUTCDateValue(metadata, CFSTR("value"), reinterpret_cast<const UTCDateTime *>(pictRecord->metadata_entries[i].value));
+                break;
+            case 20: {
+                const pict_t subPict = _ds_get_data_as_pict(pictRecord->metadata_entries[i].value, pictRecord->metadata_entries[i].length);
+                CFDictionarySetValue(metadata, CFSTR("value"), AMCFTypeRef<CFDictionaryRef>(_pict_record_copy_dictionary(&subPict)));
+                break;
+            }
+            case 1:
+            case 9:
+            case 10:
+            case 21:
+            default:
+                CFDictionarySetValue(metadata, CFSTR("value"), AMCFTypeRef<CFDataRef>(CFDataCreate(kCFAllocatorDefault, pictRecord->metadata_entries[i].value, pictRecord->metadata_entries[i].length)));
+                break;
+        }
+
+        CFArrayAppendValue(metadataItems, metadata);
+    }
+
+    CFDictionarySetValue(pict, CFSTR("metadata"), metadataItems);
+
+    return pict;
 }
 
 CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
@@ -207,9 +371,18 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
                 } else {
                     fprintf(stderr, "warning: '%.4s' record is of wrong size %zu; expected 16\n", reinterpret_cast<const char *>(&record_type_n), size);
                 }
+            } else if (ds_record_get_type(record) == ds_record_type_pict) {
+                if (size <= sizeof(pict_t)) {
+                    const pict_t pictRecord = ds_record_get_data_as_pict(record);
+                    CFDictionarySetValue(dict, CFSTR("data"), AMCFTypeRef<CFDictionaryRef>(_pict_record_copy_dictionary(&pictRecord)));
+                } else {
+                    fprintf(stderr, "warning: '%.4s' record is of too large size %zu; expected <= %zu", reinterpret_cast<const char *>(&record_type_n), size, sizeof(pict_t));
+                }
             } else {
                 CFPropertyListRef plist = ds_record_get_data_as_plist(record);
                 if (plist) {
+                    if (ds_record_get_type(record) == ds_record_type_icvp)
+                        plist = amg_ds_record_copy_icvp_display_plist(plist);
                     CFDictionarySetValue(dict, CFSTR("data"), plist);
                 } else {
                     AMCFTypeRef<CFDataRef> cfdata(CFDataCreate(kCFAllocatorDefault,
@@ -388,6 +561,96 @@ fwi0_t ds_record_get_data_as_fwi0(ds_record_t *record)
     data += sizeof(windowInfo.view);
     memcpy(windowInfo.unknown, data, sizeof(windowInfo.unknown));
     return windowInfo;
+}
+
+pict_t _ds_get_data_as_pict(const unsigned char *data, size_t len)
+{
+    assert(data);
+    const unsigned char * const data_start = data;
+    pict_t pict;
+    memset(&pict, 0, sizeof(pict_t));
+    pict.creator_code = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.creator_code);
+    pict.record_size = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    assert(pict.record_size == len);
+    data += sizeof(pict.record_size);
+    pict.version = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(pict.version);
+    pict.alias_kind = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(pict.alias_kind);
+
+    pict.volume_name.length = *reinterpret_cast<const uint8_t *>(data);
+    data += sizeof(pict.volume_name.length);
+    memcpy(pict.volume_name.data, data, sizeof(pict.volume_name.data));
+    data += sizeof(pict.volume_name.data);
+
+    pict.volume_date = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.volume_date);
+    pict.filesystem_type = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(pict.filesystem_type);
+    pict.disk_type = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(pict.disk_type);
+    pict.containing_folder_cnid = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.containing_folder_cnid);
+
+    pict.target_name.length = *reinterpret_cast<const uint8_t *>(data);
+    data += sizeof(pict.target_name.length);
+    memcpy(pict.target_name.data, data, sizeof(pict.target_name.data));
+    data += sizeof(pict.target_name.data);
+
+    pict.target_cnid = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.target_cnid);
+    pict.target_creation_date = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.target_creation_date);
+    pict.target_creator_code = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.target_creator_code);
+    pict.target_type_code = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.target_type_code);
+    const uint16_t ar_dir_depth = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    pict.alias_to_root_directory_depth = static_cast<int16_t>(ar_dir_depth);
+    data += sizeof(pict.alias_to_root_directory_depth);
+    const uint16_t rt_dir_depth = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    pict.root_to_target_directory_depth = static_cast<int16_t>(rt_dir_depth);
+    data += sizeof(pict.root_to_target_directory_depth);
+    pict.volume_attributes = ntohl(*reinterpret_cast<const uint32_t *>(data));
+    data += sizeof(pict.volume_attributes);
+    pict.volume_fsid = ntohs(*reinterpret_cast<const uint16_t *>(data));
+    data += sizeof(pict.volume_fsid);
+    memcpy(pict.reserved, data, sizeof(pict.reserved));
+    data += sizeof(pict.reserved);
+
+    uint32_t metadata_index = 0;
+    while ((data - data_start) < pict.record_size) {
+        uint16_t tag = ntohs(*reinterpret_cast<const uint16_t *>(data));
+        data += sizeof(pict.metadata_entries[metadata_index].tag);
+        pict.metadata_entries[metadata_index].tag = tag;
+        pict.metadata_entries[metadata_index].length = ntohs(*reinterpret_cast<const uint16_t *>(data));
+        data += sizeof(pict.metadata_entries[metadata_index].length);
+        uint16_t effective_length = pict.metadata_entries[metadata_index].length;
+        effective_length += effective_length % 2 != 0 ? 1 : 0;
+        memcpy(pict.metadata_entries[metadata_index].value, data, effective_length);
+        data += effective_length;
+
+        if (static_cast<int16_t>(tag) == -1) {
+            // Assertion should hold because this record should be the last one (and not be counted)
+            assert((data - data_start) == pict.record_size);
+            continue;
+        }
+
+        ++metadata_index;
+    }
+
+    pict.metadata_count = metadata_index;
+    
+    return pict;
+}
+
+pict_t ds_record_get_data_as_pict(ds_record_t *record)
+{
+    assert(record);
+    assert(ds_record_get_data_as_blob_size(record) <= sizeof(pict_t));
+    return _ds_get_data_as_pict(ds_record_get_data_as_blob_ptr(record),
+                                ds_record_get_data_as_blob_size(record));
 }
 
 uint64_t ds_record_get_data_as_comp(ds_record_t *record)
