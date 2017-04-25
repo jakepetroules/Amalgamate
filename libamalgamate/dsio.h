@@ -31,6 +31,13 @@
 #include <stdio.h>
 #include <arpa/inet.h>
 
+inline static uint8_t uint8_from(const unsigned char *p) {
+    assert(p);
+    uint8_t i;
+    memcpy(&i, p, sizeof(i));
+    return i;
+}
+
 inline static uint16_t uint16_from_be(const unsigned char *p) {
     assert(p);
     uint16_t i;
@@ -50,6 +57,46 @@ inline static uint64_t uint64_from_be(const unsigned char *p) {
     uint64_t i;
     memcpy(&i, p, sizeof(i));
     return ntohll(i);
+}
+
+inline static const unsigned char *read_uint8_from(const unsigned char *p, uint8_t *out) {
+    uint8_t value = uint8_from(p);
+    if (out)
+        *out = value;
+    return p + sizeof(value);
+}
+
+inline static const unsigned char *read_int16_from_be(const unsigned char *p, int16_t *out) {
+    uint16_t value = uint16_from_be(p);
+    if (out)
+        *out = (int16_t)value;
+    return p + sizeof(value);
+}
+
+inline static const unsigned char *read_uint16_from_be(const unsigned char *p, uint16_t *out) {
+    uint16_t value = uint16_from_be(p);
+    if (out)
+        *out = value;
+    return p + sizeof(value);
+}
+
+inline static const unsigned char *read_uint32_from_be(const unsigned char *p, uint32_t *out) {
+    uint32_t value = uint32_from_be(p);
+    if (out)
+        *out = value;
+    return p + sizeof(value);
+}
+
+inline static const unsigned char *read_uint64_from_be(const unsigned char *p, uint64_t *out) {
+    uint64_t value = uint64_from_be(p);
+    if (out)
+        *out = value;
+    return p + sizeof(value);
+}
+
+inline static const unsigned char *read_data_from(const unsigned char *p, unsigned char *out, size_t size) {
+    memcpy(out, p, size);
+    return p + size;
 }
 
 inline static size_t fread_uint8(uint8_t *value, FILE *file)

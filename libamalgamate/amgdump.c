@@ -22,6 +22,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "alias.h"
 #include "amgdump.h"
 #include "dsio.h"
 #include "dsrecord.h"
@@ -86,8 +87,8 @@ CFPropertyListRef amg_ds_record_copy_icvp_display_plist(CFPropertyListRef plist)
     CFMutableDictionaryRef plistCopy = CFDictionaryCreateMutableCopy(kCFAllocatorDefault, 0, plist);
     CFDataRef backgroundImageAlias = (CFDataRef)CFDictionaryGetValue((CFDictionaryRef)plist, CFSTR("backgroundImageAlias"));
     if (backgroundImageAlias && CFGetTypeID(backgroundImageAlias) == CFDataGetTypeID()) {
-        const pict_t bgPict = _ds_get_data_as_pict((const unsigned char *)CFDataGetBytePtr(backgroundImageAlias), (size_t)CFDataGetLength(backgroundImageAlias));
-        CFDictionarySetValue(plistCopy, CFSTR("backgroundImageAlias"), _pict_record_copy_dictionary(&bgPict));
+        const alias_t *alias = alias_create_from_data((const unsigned char *)CFDataGetBytePtr(backgroundImageAlias), (size_t)CFDataGetLength(backgroundImageAlias));
+        CFDictionarySetValue(plistCopy, CFSTR("backgroundImageAlias"), _alias_copy_dictionary(alias));
     }
 
     return plistCopy;

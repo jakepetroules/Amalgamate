@@ -14,6 +14,8 @@
 		140D7B1D1A762440006C224C /* amgmemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 140D7B151A75F187006C224C /* amgmemory.h */; };
 		140D7B1E1A76244B006C224C /* dsio.h in Headers */ = {isa = PBXBuildFile; fileRef = 14652FB519AA9B0A00959E44 /* dsio.h */; };
 		140D7B201A762A17006C224C /* dsstore_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 140D7B1F1A762A17006C224C /* dsstore_p.h */; };
+		143B09B31EAF44A000F54595 /* alias.h in Headers */ = {isa = PBXBuildFile; fileRef = 143B09AF1EAF43F900F54595 /* alias.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		143B09B51EAF595700F54595 /* alias.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 143B09B01EAF43F900F54595 /* alias.cpp */; };
 		14652FA919AA809600959E44 /* libamalgamate.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		14652FAA19AA815000959E44 /* libamalgamate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; };
 		14652FAC19AA816100959E44 /* libamalgamate.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14DBDF1E1929A032008758F2 /* libamalgamate.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -114,6 +116,9 @@
 		140D7B181A761B55006C224C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		140D7B1B1A761B5F006C224C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		140D7B1F1A762A17006C224C /* dsstore_p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsstore_p.h; sourceTree = "<group>"; };
+		143B09AF1EAF43F900F54595 /* alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alias.h; sourceTree = "<group>"; };
+		143B09B01EAF43F900F54595 /* alias.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = alias.cpp; sourceTree = "<group>"; };
+		143B09B41EAF53C700F54595 /* cfutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cfutils.h; sourceTree = "<group>"; };
 		14652FAD19AA82FC00959E44 /* dsrecord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsrecord.cpp; sourceTree = "<group>"; };
 		14652FAE19AA82FC00959E44 /* dsrecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsrecord.h; sourceTree = "<group>"; };
 		14652FB119AA848100959E44 /* amgexport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amgexport.h; sourceTree = "<group>"; };
@@ -301,6 +306,8 @@
 		14DBDF281929A13C008758F2 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				143B09B01EAF43F900F54595 /* alias.cpp */,
+				143B09AF1EAF43F900F54595 /* alias.h */,
 				14652FB319AA8ACA00959E44 /* amg.h */,
 				147C5DA21A5B84E000EBFD90 /* amgconvert.cpp */,
 				147C5DA31A5B84E000EBFD90 /* amgconvert.h */,
@@ -309,6 +316,7 @@
 				140D7B161A75FB25006C224C /* amgdump.m */,
 				14652FB119AA848100959E44 /* amgexport.h */,
 				140D7B151A75F187006C224C /* amgmemory.h */,
+				143B09B41EAF53C700F54595 /* cfutils.h */,
 				14652FAD19AA82FC00959E44 /* dsrecord.cpp */,
 				14652FAE19AA82FC00959E44 /* dsrecord.h */,
 				14B550D419D3DA560042C966 /* dsrecord.mm */,
@@ -346,6 +354,7 @@
 				14652FB019AA82FC00959E44 /* dsrecord.h in Headers */,
 				147C5DA11A5AF7C000EBFD90 /* amgdump.h in Headers */,
 				14DBDF2C1929A21F008758F2 /* dsstore.h in Headers */,
+				143B09B31EAF44A000F54595 /* alias.h in Headers */,
 				14B550D719D3DAF40042C966 /* dsrecord_p.h in Headers */,
 				14652FB219AA848100959E44 /* amgexport.h in Headers */,
 				140D7B201A762A17006C224C /* dsstore_p.h in Headers */,
@@ -523,6 +532,7 @@
 				147C5DA41A5B84E000EBFD90 /* amgconvert.cpp in Sources */,
 				14DBDF2A1929A211008758F2 /* dsstore.cpp in Sources */,
 				147C5DA01A5AF7C000EBFD90 /* amgdump.c in Sources */,
+				143B09B51EAF595700F54595 /* alias.cpp in Sources */,
 				14652FAF19AA82FC00959E44 /* dsrecord.cpp in Sources */,
 				14B550D519D3DA560042C966 /* dsrecord.mm in Sources */,
 				140D7B171A75FC96006C224C /* amgdump.m in Sources */,
