@@ -75,6 +75,7 @@ typedef enum {
     ds_record_type_lsvP = FOUR_CHAR_CODE('lsvP'),
     ds_record_type_modD = FOUR_CHAR_CODE('modD'), // prModificationDate (modd)?
     ds_record_type_moDD = FOUR_CHAR_CODE('moDD'),
+    ds_record_type_pBBk = FOUR_CHAR_CODE('pBBk'),
     ds_record_type_phyS = FOUR_CHAR_CODE('phyS'), // prPhysicalSize (phys)?
     ds_record_type_ph1S = FOUR_CHAR_CODE('ph1S'),
     ds_record_type_pict = FOUR_CHAR_CODE('pict'),
@@ -136,6 +137,59 @@ AMG_EXPORT AMG_EXTERN Iloc_t ds_record_get_data_as_Iloc(ds_record_t *record);
 
 typedef struct { uint16_t top, left, bottom, right; uint32_t view; unsigned char unknown[4]; } fwi0_t;
 AMG_EXPORT AMG_EXTERN fwi0_t ds_record_get_data_as_fwi0(ds_record_t *record);
+
+typedef struct {
+    uint32_t magic;
+    uint32_t bookmark_size;
+    uint32_t unknown; // 0x10040000
+    uint32_t header_size;
+    unsigned char reserved[32];
+
+    uint32_t toc_offset;
+
+    uint32_t toc_count; // API only
+    struct {
+        uint32_t size;
+        uint32_t magic;
+        uint32_t identifier;
+        uint32_t next_toc_offset;
+        uint32_t count;
+        struct {
+            uint32_t key;
+            uint32_t offset;
+            uint32_t reserved; // 0x000000
+            struct {
+                uint32_t length;
+                uint32_t type;
+                unsigned char value[256];
+            } data;
+        } entries[256];
+    } toc[16];
+} pBBk_t;
+
+typedef enum {
+    pBBk_string = 0x0101,
+    pBBk_data = 0x0201,
+    pBBk_int8 = 0x0301,
+    pBBk_int16 = 0x0302,
+    pBBk_int32 = 0x0303,
+    pBBk_int64 = 0x0304,
+    pBBk_float32 = 0x0305,
+    pBBk_float64 = 0x0306,
+    pBBk_date = 0x0400,
+    pBBk_false = 0x0500,
+    pBBk_true = 0x0501,
+    pBBk_array = 0x0601,
+    pBBk_dictionary = 0x0701,
+    pBBk_uuid = 0x0801,
+    pBBk_url = 0x0901,
+    pBBk_url_relative = 0x0902,
+} pBBK_data_type;
+
+AMG_EXPORT AMG_EXTERN pBBk_t ds_record_get_data_as_pBBk(ds_record_t *record);
+AMG_EXPORT AMG_EXTERN CFDictionaryRef _pBBk_record_copy_dictionary(const pBBk_t *);
+
+AMG_EXPORT AMG_EXTERN pBBk_t _ds_get_data_as_pBBk(const unsigned char *data, size_t len);
 
 typedef struct {
     uint32_t creator_code;
