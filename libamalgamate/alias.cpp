@@ -138,24 +138,40 @@ alias_t *alias_create_from_data(const unsigned char *data, size_t size)
     data = read_uint16_from_be(data, &alias->header.volume_fsid);
     data = read_data_from(data, alias->header.reserved, sizeof(alias->header.reserved));
 
-    while ((data - data_start) + 4 <= alias->header.record_size) {
+    while ((data - data_start) <= alias->header.record_size - 4) {
         metadata_entry_t entry;
+        memset(&entry, 0, sizeof(entry));
         data = read_int16_from_be(data, &entry.tag);
         data = read_uint16_from_be(data, &entry.length);
-        data = read_data_from(data, entry.value, entry.length % 2 == 0 ? entry.length : entry.length + 1);
+
+        const uint16_t entry_length = entry.length % 2 == 0 ? entry.length : entry.length + 1;
+        if ((data - data_start) > alias->header.record_size - entry_length) {
+            fprintf(stderr,
+                "effective alias metadata entry length %hu at offset %zd exceeds record size %hu\n",
+                entry_length, data - data_start, alias->header.record_size);
+            alias_free(alias);
+            return nullptr;
+        }
+
+        data = read_data_from(data, entry.value, entry_length);
 
         if (entry.tag == -1) {
             // this record should be the last one (and not be counted)
-            if ((data - data_start) != alias->header.record_size) {
-                fprintf(stderr, "warning: %zd bytes of garbage data following alias record\n",
-                        (data - data_start) - alias->header.record_size);
-            }
-            continue;
+            if ((data - data_start) != alias->header.record_size)
+                fprintf(stderr, "warning: additional data following alias sentinel record\n");
+
+            // TODO: Should we instead continue, and try to read additional records?
+            break;
         }
 
         alias->metadata_entries.push_back(entry);
     }
-    
+
+    if ((data - data_start) != alias->header.record_size) {
+        fprintf(stderr, "warning: %zd bytes of garbage data following alias record\n",
+                alias->header.record_size - (data - data_start));
+    }
+
     return alias;
 }
 
