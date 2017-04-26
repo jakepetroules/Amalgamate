@@ -910,6 +910,8 @@ ds_record_data_type ds_record_data_type_for_record_type(ds_record_type record_ty
             return ds_record_data_type_shor;
         case ds_record_type_GRP0:
             return ds_record_data_type_ustr;
+        case ds_record_type_icvl:
+            return ds_record_data_type_type;
         case ds_record_type_icgo:
             return ds_record_data_type_blob;
         case ds_record_type_icsp:

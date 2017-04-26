@@ -66,6 +66,7 @@ typedef enum {
     ds_record_type_GRP0 = FOUR_CHAR_CODE('GRP0'),
     ds_record_type_icgo = FOUR_CHAR_CODE('icgo'),
     ds_record_type_icsp = FOUR_CHAR_CODE('icsp'),
+    ds_record_type_icvl = FOUR_CHAR_CODE('icvl'),
     ds_record_type_icvo = FOUR_CHAR_CODE('icvo'),
     ds_record_type_icvp = FOUR_CHAR_CODE('icvp'),
     ds_record_type_icvP = FOUR_CHAR_CODE('icvP'),
