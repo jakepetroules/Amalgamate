@@ -24,6 +24,7 @@
 
 #include "alias.h"
 #include "dsio.h"
+#include <algorithm>
 #include <cassert>
 #include <vector>
 
@@ -221,7 +222,7 @@ CFDictionaryRef _alias_copy_dictionary(const alias_t *pictRecord)
             case 14:
             case 15:
                 // offset by 2 bytes (string length)
-                AMGCFDictionarySetHFSStringValue(metadata, CFSTR("value"), reinterpret_cast<const char *>(entry.value + 2), static_cast<size_t>(entry.length));
+                AMGCFDictionarySetHFSStringValue(metadata, CFSTR("value"), reinterpret_cast<const char *>(entry.value + sizeof(uint16_t)), static_cast<size_t>(std::min<uint16_t>(uint16_from_be(entry.value) * sizeof(uint16_t), entry.length)));
                 break;
             case 16:
             case 17:
