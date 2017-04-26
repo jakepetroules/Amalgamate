@@ -99,8 +99,9 @@ CFMutableDictionaryRef _pBBk_entry_data_copy_dictionary(const pBBk_entry_data_t 
             break;
         case pBBk_date: {
             CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("date"));
-            CFAbsoluteTime value = ntohl(*reinterpret_cast<const double *>(pbbkEntryData->value));
-            AMGCFDictionarySetCFDateValue(entry, CFSTR("data.value"), value);
+            const uint64_t ivalue = ntohll(*reinterpret_cast<const uint64_t *>(pbbkEntryData->value));
+            const CFAbsoluteTime *value = reinterpret_cast<const double *>(&ivalue);
+            AMGCFDictionarySetCFDateValue(entry, CFSTR("data.value"), *value);
             break;
         }
         case pBBk_false:
