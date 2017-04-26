@@ -241,9 +241,11 @@ CFDictionaryRef _alias_copy_dictionary(const alias_t *pictRecord)
                 AMGCFDictionarySetHFSStringValue(metadata, CFSTR("value"), reinterpret_cast<const char *>(entry.value + sizeof(uint16_t)), static_cast<size_t>(std::min<uint16_t>(uint16_from_be(entry.value) * sizeof(uint16_t), entry.length)));
                 break;
             case 16:
-            case 17:
-                AMGCFDictionarySetUTCDateValue(metadata, CFSTR("value"), reinterpret_cast<const UTCDateTime *>(entry.value));
+            case 17: {
+                const uint64_t value = uint64_from_be(entry.value);
+                AMGCFDictionarySetUTCDateValue(metadata, CFSTR("value"), reinterpret_cast<const UTCDateTime *>(&value));
                 break;
+            }
             case 20: {
                 const alias_t *recursiveAlias = alias_create_from_data(entry.value, entry.length);
                 CFDictionarySetValue(metadata, CFSTR("value"), AMCFTypeRef<CFDictionaryRef>(_alias_copy_dictionary(recursiveAlias)));
