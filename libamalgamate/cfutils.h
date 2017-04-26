@@ -115,6 +115,14 @@ static void AMGCFDictionarySetIntValue(CFMutableDictionaryRef dict, CFStringRef 
 
 }
 
+static void AMGCFDictionarySetLongLongValue(CFMutableDictionaryRef dict, CFStringRef key, uint64_t value)
+{
+    CFDictionarySetValue(dict, key,
+                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
+                                                                 kCFNumberLongLongType,
+                                                                 &value)));
+}
+
 static CFStringRef AMGCFStringCreateCString(const char *s, size_t len)
 {
     return CFStringCreateWithBytes(kCFAllocatorDefault,

@@ -54,63 +54,63 @@ void ds_record_free(ds_record_t *record)
 
 CFMutableDictionaryRef _pBBk_entry_data_copy_dictionary(const pBBk_entry_data_t *pbbkEntryData, const pBBk_t *pbbkRecord, const unsigned char *data, size_t len)
 {
-            CFMutableDictionaryRef entry(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
-                                                                   &kCFTypeDictionaryKeyCallBacks,
-                                                                   &kCFTypeDictionaryValueCallBacks));
+    CFMutableDictionaryRef entry(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                           &kCFTypeDictionaryKeyCallBacks,
+                                                           &kCFTypeDictionaryValueCallBacks));
 
     const pBBK_data_type data_type = pBBK_data_type(pbbkEntryData->type);
-            switch (data_type) {
-                case pBBk_string:
-                case pBBk_url:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), data_type == pBBk_url ? CFSTR("url") : CFSTR("string"));
-                    AMGCFDictionarySetUTF8StringValue(entry, CFSTR("data.value"),
+    switch (data_type) {
+        case pBBk_string:
+        case pBBk_url:
+            CFDictionarySetValue(entry, CFSTR("data.type"), data_type == pBBk_url ? CFSTR("url") : CFSTR("string"));
+            AMGCFDictionarySetUTF8StringValue(entry, CFSTR("data.value"),
                                               reinterpret_cast<const char *>(pbbkEntryData->value),
                                               pbbkEntryData->length);
-                    break;
-                case pBBk_int8:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int8"));
-                    AMGCFDictionarySetSInt8Value(entry, CFSTR("data.value"),
+            break;
+        case pBBk_int8:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int8"));
+            AMGCFDictionarySetSInt8Value(entry, CFSTR("data.value"),
                                          *reinterpret_cast<const int8_t *>(pbbkEntryData->value));
-                    break;
-                case pBBk_int16:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int16"));
-                    AMGCFDictionarySetSInt16Value(entry, CFSTR("data.value"),
+            break;
+        case pBBk_int16:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int16"));
+            AMGCFDictionarySetSInt16Value(entry, CFSTR("data.value"),
                                           *reinterpret_cast<const int16_t *>(pbbkEntryData->value));
-                    break;
-                case pBBk_int32:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int32"));
-                    AMGCFDictionarySetSInt32Value(entry, CFSTR("data.value"),
+            break;
+        case pBBk_int32:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int32"));
+            AMGCFDictionarySetSInt32Value(entry, CFSTR("data.value"),
                                           *reinterpret_cast<const int32_t *>(pbbkEntryData->value));
-                    break;
-                case pBBk_int64:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int64"));
-                    AMGCFDictionarySetSInt64Value(entry, CFSTR("data.value"),
+            break;
+        case pBBk_int64:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int64"));
+            AMGCFDictionarySetSInt64Value(entry, CFSTR("data.value"),
                                           *reinterpret_cast<const int64_t *>(pbbkEntryData->value));
-                    break;
-                case pBBk_float32:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float32"));
-                    AMGCFDictionarySetFloat32Value(entry, CFSTR("data.value"),
+            break;
+        case pBBk_float32:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float32"));
+            AMGCFDictionarySetFloat32Value(entry, CFSTR("data.value"),
                                            *reinterpret_cast<const float *>(pbbkEntryData->value));
-                    break;
-                case pBBk_float64:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float64"));
-                    AMGCFDictionarySetFloat64Value(entry, CFSTR("data.value"),
+            break;
+        case pBBk_float64:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float64"));
+            AMGCFDictionarySetFloat64Value(entry, CFSTR("data.value"),
                                            *reinterpret_cast<const double *>(pbbkEntryData->value));
-                    break;
-                case pBBk_date: {
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("date"));
+            break;
+        case pBBk_date: {
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("date"));
             CFAbsoluteTime value = ntohl(*reinterpret_cast<const double *>(pbbkEntryData->value));
-                    AMGCFDictionarySetCFDateValue(entry, CFSTR("data.value"), value);
-                    break;
-                }
-                case pBBk_false:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
-                    CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanFalse);
-                    break;
-                case pBBk_true:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
-                    CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanTrue);
-                    break;
+            AMGCFDictionarySetCFDateValue(entry, CFSTR("data.value"), value);
+            break;
+        }
+        case pBBk_false:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
+            CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanFalse);
+            break;
+        case pBBk_true:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
+            CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanTrue);
+            break;
         case pBBk_array:
             CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("array"));
             if (pbbkEntryData->length % sizeof(uint32_t) == 0) {
@@ -136,21 +136,21 @@ CFMutableDictionaryRef _pBBk_entry_data_copy_dictionary(const pBBk_entry_data_t 
             } else {
                 [[clang::fallthrough]];
             }
-                case pBBk_data:
-                case pBBk_uuid:
-                default:
-                    if (data_type == pBBk_data)
-                        CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("data"));
-                    else if (data_type == pBBk_uuid)
-                        CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("uuid"));
-                    else
+        case pBBk_data:
+        case pBBk_uuid:
+        default:
+            if (data_type == pBBk_data)
+                CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("data"));
+            else if (data_type == pBBk_uuid)
+                CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("uuid"));
+            else
                 AMGCFDictionarySetIntValue(entry, CFSTR("data.type"), pbbkEntryData->type);
-                    CFDictionarySetValue(entry, CFSTR("data.value"),
-                                         CFDataCreate(kCFAllocatorDefault,
+            CFDictionarySetValue(entry, CFSTR("data.value"),
+                                 CFDataCreate(kCFAllocatorDefault,
                                               reinterpret_cast<const UInt8 *>(pbbkEntryData->value),
                                               static_cast<CFIndex>(pbbkEntryData->length)));
-                    break;
-            }
+            break;
+    }
 
     return entry;
 }
@@ -235,15 +235,11 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
 
     switch (ds_record_get_data_type(record)) {
         case ds_record_data_type_long: {
-            const uint32_t value = ds_record_get_data_as_long(record);
-            AMCFTypeRef<CFNumberRef> number(CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &value));
-            CFDictionarySetValue(dict, CFSTR("data"), number);
+            AMGCFDictionarySetIntValue(dict, CFSTR("data"), ds_record_get_data_as_long(record));
             break;
         }
         case ds_record_data_type_shor: {
-            const uint16_t value = ds_record_get_data_as_shor(record);
-            AMCFTypeRef<CFNumberRef> number(CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &value));
-            CFDictionarySetValue(dict, CFSTR("data"), number);
+            AMGCFDictionarySetShortValue(dict, CFSTR("data"), ds_record_get_data_as_shor(record));
             break;
         }
         case ds_record_data_type_bool: {
@@ -274,18 +270,9 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
                         const uint16_t g = uint16_from_be(data + 2);
                         const uint16_t b = uint16_from_be(data + 4);
 
-                        CFDictionarySetValue(bkgd, CFSTR("r"),
-                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                     kCFNumberShortType,
-                                                                                     &r)));
-                        CFDictionarySetValue(bkgd, CFSTR("g"),
-                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                     kCFNumberShortType,
-                                                                                     &g)));
-                        CFDictionarySetValue(bkgd, CFSTR("b"),
-                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                     kCFNumberShortType,
-                                                                                     &b)));
+                        AMGCFDictionarySetShortValue(bkgd, CFSTR("r"), r);
+                        AMGCFDictionarySetShortValue(bkgd, CFSTR("g"), g);
+                        AMGCFDictionarySetShortValue(bkgd, CFSTR("b"), b);
 
                         data += 6;
                         size -= 6;
@@ -294,10 +281,7 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
                         data += 4;
                         size -= 4;
 
-                        CFDictionarySetValue(bkgd, CFSTR("pict"),
-                                             AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                     kCFNumberIntType,
-                                                                                     &pict_len)));
+                        AMGCFDictionarySetIntValue(bkgd, CFSTR("pict"), pict_len);
                     }
 
                     CFDictionarySetValue(dict, CFSTR("data"), bkgd);
@@ -310,14 +294,8 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
                     AMCFTypeRef<CFMutableDictionaryRef> iloc(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
                                                                                        &kCFTypeDictionaryKeyCallBacks,
                                                                                        &kCFTypeDictionaryValueCallBacks));
-                    CFDictionarySetValue(iloc, CFSTR("x"),
-                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                 kCFNumberIntType,
-                                                                                 &iconLocation.x)));
-                    CFDictionarySetValue(iloc, CFSTR("y"),
-                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                 kCFNumberIntType,
-                                                                                 &iconLocation.y)));
+                    AMGCFDictionarySetIntValue(iloc, CFSTR("x"), iconLocation.x);
+                    AMGCFDictionarySetIntValue(iloc, CFSTR("y"), iconLocation.y);
                     CFDictionarySetValue(iloc, CFSTR("unknown"),
                                          AMCFTypeRef<CFDataRef>(CFDataCreate(kCFAllocatorDefault,
                                                                              iconLocation.unknown,
@@ -329,34 +307,16 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
             } else if (ds_record_get_type(record) == ds_record_type_fwi0) {
                 if (size == 16) {
                     const fwi0_t windowInfo = ds_record_get_data_as_fwi0(record);
-                    const uint32_t view_n = htonl(windowInfo.view);
-                    const char *view_ptr = reinterpret_cast<const char *>(&view_n);
 
                     AMCFTypeRef<CFMutableDictionaryRef> fwi0(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
                                                                                        &kCFTypeDictionaryKeyCallBacks,
                                                                                        &kCFTypeDictionaryValueCallBacks));
 
-                    CFDictionarySetValue(fwi0, CFSTR("top"),
-                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                 kCFNumberShortType,
-                                                                                 &windowInfo.top)));
-                    CFDictionarySetValue(fwi0, CFSTR("left"),
-                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                 kCFNumberShortType,
-                                                                                 &windowInfo.left)));
-                    CFDictionarySetValue(fwi0, CFSTR("bottom"),
-                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                 kCFNumberShortType,
-                                                                                 &windowInfo.bottom)));
-                    CFDictionarySetValue(fwi0, CFSTR("right"),
-                                         AMCFTypeRef<CFNumberRef>(CFNumberCreate(kCFAllocatorDefault,
-                                                                                 kCFNumberShortType,
-                                                                                 &windowInfo.right)));
-                    CFDictionarySetValue(fwi0, CFSTR("view"), AMCFTypeRef<CFStringRef>(CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%c%c%c%c"),
-                                                                                                                view_ptr[0],
-                                                                                                                view_ptr[1],
-                                                                                                                view_ptr[2],
-                                                                                                                view_ptr[3])));
+                    AMGCFDictionarySetShortValue(fwi0, CFSTR("top"), windowInfo.top);
+                    AMGCFDictionarySetShortValue(fwi0, CFSTR("left"), windowInfo.left);
+                    AMGCFDictionarySetShortValue(fwi0, CFSTR("bottom"), windowInfo.bottom);
+                    AMGCFDictionarySetShortValue(fwi0, CFSTR("right"), windowInfo.right);
+                    AMGCFDictionarySetFourCCValue(fwi0, CFSTR("view"), windowInfo.view);
                     CFDictionarySetValue(fwi0, CFSTR("unknown"),
                                          AMCFTypeRef<CFDataRef>(CFDataCreate(kCFAllocatorDefault,
                                                                              windowInfo.unknown,
@@ -392,14 +352,7 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
             break;
         }
         case ds_record_data_type_type: {
-            const uint32_t type = htonl(ds_record_get_data_as_type(record));
-            const char *type_ptr = reinterpret_cast<const char *>(&type);
-            AMCFTypeRef<CFStringRef> type_str(CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%c%c%c%c"),
-                                                                       type_ptr[0],
-                                                                       type_ptr[1],
-                                                                       type_ptr[2],
-                                                                       type_ptr[3]));
-            CFDictionarySetValue(dict, CFSTR("data"), type_str);
+            AMGCFDictionarySetFourCCValue(dict, CFSTR("data"), ds_record_get_data_as_type(record));
             break;
         }
         case ds_record_data_type_ustr: {
@@ -410,9 +363,7 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
             break;
         }
         case ds_record_data_type_comp: {
-            const uint64_t value = ds_record_get_data_as_comp(record);
-            AMCFTypeRef<CFNumberRef> number(CFNumberCreate(kCFAllocatorDefault, kCFNumberLongLongType, &value));
-            CFDictionarySetValue(dict, CFSTR("data"), number);
+            AMGCFDictionarySetLongLongValue(dict, CFSTR("data"), ds_record_get_data_as_comp(record));
             break;
         }
         case ds_record_data_type_dutc: {
@@ -422,8 +373,7 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
                 fprintf(stderr, "error converting UTCDateTime to CFAbsoluteTime");
                 return nullptr;
             }
-            AMCFTypeRef<CFDateRef> date(CFDateCreate(kCFAllocatorDefault, cfvalue));
-            CFDictionarySetValue(dict, CFSTR("data"), date);
+            AMGCFDictionarySetCFDateValue(dict, CFSTR("data"), cfvalue);
             break;
         }
     }
