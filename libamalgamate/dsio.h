@@ -31,6 +31,10 @@
 #include <stdio.h>
 #include <arpa/inet.h>
 
+#define ltohs(n) (ntohs(0x0102) == 0x0102 ? _OSSwapInt32(n) : n)
+#define ltohl(n) (ntohl(0x01020304) == 0x01020304 ? _OSSwapInt32(n) : n)
+#define ltohll(n) (ntohl(0x0102030405060708) == 0x0102030405060708 ? _OSSwapInt32(n) : n)
+
 inline static uint8_t uint8_from(const unsigned char *p) {
     assert(p);
     uint8_t i;
@@ -50,6 +54,13 @@ inline static uint32_t uint32_from_be(const unsigned char *p) {
     uint32_t i;
     memcpy(&i, p, sizeof(i));
     return ntohl(i);
+}
+
+inline static uint32_t uint32_from_le(const unsigned char *p) {
+    assert(p);
+    uint32_t i;
+    memcpy(&i, p, sizeof(i));
+    return ltohl(i);
 }
 
 inline static uint64_t uint64_from_be(const unsigned char *p) {
@@ -82,6 +93,13 @@ inline static const unsigned char *read_uint16_from_be(const unsigned char *p, u
 
 inline static const unsigned char *read_uint32_from_be(const unsigned char *p, uint32_t *out) {
     uint32_t value = uint32_from_be(p);
+    if (out)
+        *out = value;
+    return p + sizeof(value);
+}
+
+inline static const unsigned char *read_uint32_from_le(const unsigned char *p, uint32_t *out) {
+    uint32_t value = uint32_from_le(p);
     if (out)
         *out = value;
     return p + sizeof(value);
@@ -163,5 +181,9 @@ inline static size_t fwrite_uint64_be(uint64_t *value, FILE *file)
     const uint64_t value_n = htonll(*value);
     return fwrite(&value_n, sizeof(value_n), 1, file);
 }
+
+#undef ltohs
+#undef ltohl
+#undef ltohll
 
 #endif
