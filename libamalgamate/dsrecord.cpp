@@ -52,7 +52,120 @@ void ds_record_free(ds_record_t *record)
     delete record;
 }
 
-CFDictionaryRef _pBBk_record_copy_dictionary(const pBBk_t *pbbkRecord)
+CFMutableDictionaryRef _pBBk_entry_data_copy_dictionary(const pBBk_entry_data_t *pbbkEntryData, const pBBk_t *pbbkRecord, const unsigned char *data, size_t len)
+{
+            CFMutableDictionaryRef entry(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                                   &kCFTypeDictionaryKeyCallBacks,
+                                                                   &kCFTypeDictionaryValueCallBacks));
+
+    const pBBK_data_type data_type = pBBK_data_type(pbbkEntryData->type);
+            switch (data_type) {
+                case pBBk_string:
+                case pBBk_url:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), data_type == pBBk_url ? CFSTR("url") : CFSTR("string"));
+                    AMGCFDictionarySetUTF8StringValue(entry, CFSTR("data.value"),
+                                              reinterpret_cast<const char *>(pbbkEntryData->value),
+                                              pbbkEntryData->length);
+                    break;
+                case pBBk_int8:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int8"));
+                    AMGCFDictionarySetSInt8Value(entry, CFSTR("data.value"),
+                                         *reinterpret_cast<const int8_t *>(pbbkEntryData->value));
+                    break;
+                case pBBk_int16:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int16"));
+                    AMGCFDictionarySetSInt16Value(entry, CFSTR("data.value"),
+                                          *reinterpret_cast<const int16_t *>(pbbkEntryData->value));
+                    break;
+                case pBBk_int32:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int32"));
+                    AMGCFDictionarySetSInt32Value(entry, CFSTR("data.value"),
+                                          *reinterpret_cast<const int32_t *>(pbbkEntryData->value));
+                    break;
+                case pBBk_int64:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int64"));
+                    AMGCFDictionarySetSInt64Value(entry, CFSTR("data.value"),
+                                          *reinterpret_cast<const int64_t *>(pbbkEntryData->value));
+                    break;
+                case pBBk_float32:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float32"));
+                    AMGCFDictionarySetFloat32Value(entry, CFSTR("data.value"),
+                                           *reinterpret_cast<const float *>(pbbkEntryData->value));
+                    break;
+                case pBBk_float64:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float64"));
+                    AMGCFDictionarySetFloat64Value(entry, CFSTR("data.value"),
+                                           *reinterpret_cast<const double *>(pbbkEntryData->value));
+                    break;
+                case pBBk_date: {
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("date"));
+            CFAbsoluteTime value = ntohl(*reinterpret_cast<const double *>(pbbkEntryData->value));
+                    AMGCFDictionarySetCFDateValue(entry, CFSTR("data.value"), value);
+                    break;
+                }
+                case pBBk_false:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
+                    CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanFalse);
+                    break;
+                case pBBk_true:
+                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
+                    CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanTrue);
+                    break;
+        case pBBk_array:
+            CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("array"));
+            if (pbbkEntryData->length % sizeof(uint32_t) == 0) {
+                CFMutableArrayRef arr = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+
+                for (uint32_t k = 0; k < pbbkEntryData->length / sizeof(uint32_t); ++k) {
+                    const uint32_t off = uint32_from_le(pbbkEntryData->value + (sizeof(uint32_t) * k));
+
+                    pBBk_entry_data_t newEntry;
+                    memset(&newEntry, 0, sizeof(newEntry));
+
+                    const unsigned char *dt = data + 48 + off;
+                    dt = read_uint32_from_le(dt, &newEntry.length);
+                    dt = read_uint32_from_le(dt, &newEntry.type);
+                    dt = read_data_from(dt, newEntry.value, std::min<uint32_t>(newEntry.length, sizeof(newEntry.value)));
+
+                    CFArrayAppendValue(arr, _pBBk_entry_data_copy_dictionary(&newEntry, pbbkRecord, data, len));
+                }
+
+                CFDictionarySetValue(entry, CFSTR("data.value"), arr);
+
+                break;
+            } else {
+                [[clang::fallthrough]];
+            }
+                case pBBk_data:
+                case pBBk_uuid:
+                default:
+                    if (data_type == pBBk_data)
+                        CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("data"));
+                    else if (data_type == pBBk_uuid)
+                        CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("uuid"));
+                    else
+                AMGCFDictionarySetIntValue(entry, CFSTR("data.type"), pbbkEntryData->type);
+                    CFDictionarySetValue(entry, CFSTR("data.value"),
+                                         CFDataCreate(kCFAllocatorDefault,
+                                              reinterpret_cast<const UInt8 *>(pbbkEntryData->value),
+                                              static_cast<CFIndex>(pbbkEntryData->length)));
+                    break;
+            }
+
+    return entry;
+}
+
+CFDictionaryRef _pBBk_entry_copy_dictionary(const pBBk_entry_t *pbbkEntry, const pBBk_t *pbbkRecord, const unsigned char *data, size_t len)
+{
+    CFMutableDictionaryRef entry = _pBBk_entry_data_copy_dictionary(&pbbkEntry->data, pbbkRecord, data, len);
+    AMGCFDictionarySetIntValue(entry, CFSTR("key"), pbbkEntry->key);
+    AMGCFDictionarySetIntValue(entry, CFSTR("offset"), pbbkEntry->offset);
+    AMGCFDictionarySetIntValue(entry, CFSTR("reserved"), pbbkEntry->reserved);
+    AMGCFDictionarySetIntValue(entry, CFSTR("data.length"), pbbkEntry->data.length);
+    return entry;
+}
+
+CFDictionaryRef _pBBk_record_copy_dictionary(const pBBk_t *pbbkRecord, const unsigned char *data, size_t len)
 {
     CFMutableDictionaryRef pbbk(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
                                                           &kCFTypeDictionaryKeyCallBacks,
@@ -78,84 +191,7 @@ CFDictionaryRef _pBBk_record_copy_dictionary(const pBBk_t *pbbkRecord)
 
         CFMutableArrayRef entries = CFArrayCreateMutable(kCFAllocatorDefault, static_cast<CFIndex>(pbbkRecord->toc[i].count), &kCFTypeArrayCallBacks);
         for (uint32_t j = 0; j < pbbkRecord->toc[i].count; ++j) {
-            CFMutableDictionaryRef entry(CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
-                                                                   &kCFTypeDictionaryKeyCallBacks,
-                                                                   &kCFTypeDictionaryValueCallBacks));
-            AMGCFDictionarySetIntValue(entry, CFSTR("key"), pbbkRecord->toc[i].entries[j].key);
-            AMGCFDictionarySetIntValue(entry, CFSTR("offset"), pbbkRecord->toc[i].entries[j].offset);
-            AMGCFDictionarySetIntValue(entry, CFSTR("reserved"), pbbkRecord->toc[i].entries[j].reserved);
-            AMGCFDictionarySetIntValue(entry, CFSTR("data.length"), pbbkRecord->toc[i].entries[j].data.length);
-
-            const pBBK_data_type data_type = pBBK_data_type(pbbkRecord->toc[i].entries[j].data.type);
-            switch (data_type) {
-                case pBBk_string:
-                case pBBk_url:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), data_type == pBBk_url ? CFSTR("url") : CFSTR("string"));
-                    AMGCFDictionarySetUTF8StringValue(entry, CFSTR("data.value"),
-                                                      reinterpret_cast<const char *>(pbbkRecord->toc[i].entries[j].data.value),
-                                                      pbbkRecord->toc[i].entries[j].data.length);
-                    break;
-                case pBBk_int8:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int8"));
-                    AMGCFDictionarySetSInt8Value(entry, CFSTR("data.value"),
-                        *reinterpret_cast<const int8_t *>(pbbkRecord->toc[i].entries[j].data.value));
-                    break;
-                case pBBk_int16:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int16"));
-                    AMGCFDictionarySetSInt16Value(entry, CFSTR("data.value"),
-                        *reinterpret_cast<const int16_t *>(pbbkRecord->toc[i].entries[j].data.value));
-                    break;
-                case pBBk_int32:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int32"));
-                    AMGCFDictionarySetSInt32Value(entry, CFSTR("data.value"),
-                        *reinterpret_cast<const int32_t *>(pbbkRecord->toc[i].entries[j].data.value));
-                    break;
-                case pBBk_int64:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("int64"));
-                    AMGCFDictionarySetSInt64Value(entry, CFSTR("data.value"),
-                        *reinterpret_cast<const int64_t *>(pbbkRecord->toc[i].entries[j].data.value));
-                    break;
-                case pBBk_float32:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float32"));
-                    AMGCFDictionarySetFloat32Value(entry, CFSTR("data.value"),
-                                               *reinterpret_cast<const float *>(pbbkRecord->toc[i].entries[j].data.value));
-                    break;
-                case pBBk_float64:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("float64"));
-                    AMGCFDictionarySetFloat64Value(entry, CFSTR("data.value"),
-                                               *reinterpret_cast<const double *>(pbbkRecord->toc[i].entries[j].data.value));
-                    break;
-                case pBBk_date: {
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("date"));
-                    CFAbsoluteTime value = ntohl(*reinterpret_cast<const double *>(pbbkRecord->toc[i].entries[j].data.value));
-                    AMGCFDictionarySetCFDateValue(entry, CFSTR("data.value"), value);
-                    break;
-                }
-                case pBBk_false:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
-                    CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanFalse);
-                    break;
-                case pBBk_true:
-                    CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("bool"));
-                    CFDictionarySetValue(entry, CFSTR("data.value"), kCFBooleanTrue);
-                    break;
-                case pBBk_data:
-                case pBBk_uuid:
-                default:
-                    if (data_type == pBBk_data)
-                        CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("data"));
-                    else if (data_type == pBBk_uuid)
-                        CFDictionarySetValue(entry, CFSTR("data.type"), CFSTR("uuid"));
-                    else
-                        AMGCFDictionarySetIntValue(entry, CFSTR("data.type"), pbbkRecord->toc[i].entries[j].data.type);
-                    CFDictionarySetValue(entry, CFSTR("data.value"),
-                                         CFDataCreate(kCFAllocatorDefault,
-                                                      reinterpret_cast<const UInt8 *>(pbbkRecord->toc[i].entries[j].data.value),
-                                                      static_cast<CFIndex>(pbbkRecord->toc[i].entries[j].data.length)));
-                    break;
-            }
-
-            CFArrayAppendValue(entries, entry);
+            CFArrayAppendValue(entries, _pBBk_entry_copy_dictionary(&pbbkRecord->toc[i].entries[j], pbbkRecord, data, len));
         }
 
         CFDictionarySetValue(toc, CFSTR("entries"), entries);
@@ -332,7 +368,7 @@ CFDictionaryRef ds_record_copy_dictionary(ds_record_t *record)
             } else if (ds_record_get_type(record) == ds_record_type_pBBk) {
                 if (size <= sizeof(pBBk_t)) {
                     const pBBk_t pbbkRecord = ds_record_get_data_as_pBBk(record);
-                    CFDictionarySetValue(dict, CFSTR("data"), AMCFTypeRef<CFDictionaryRef>(_pBBk_record_copy_dictionary(&pbbkRecord)));
+                    CFDictionarySetValue(dict, CFSTR("data"), AMCFTypeRef<CFDictionaryRef>(_pBBk_record_copy_dictionary(&pbbkRecord, ds_record_get_data_as_blob_ptr(record), ds_record_get_data_as_blob_size(record))));
                 } else {
                     fprintf(stderr, "warning: '%.4s' record is of too large size %zu; expected <= %zu", reinterpret_cast<const char *>(&record_type_n), size, sizeof(pBBk_t));
                 }

@@ -145,6 +145,19 @@ typedef struct { uint16_t top, left, bottom, right; uint32_t view; unsigned char
 AMG_EXPORT AMG_EXTERN fwi0_t ds_record_get_data_as_fwi0(ds_record_t *record);
 
 typedef struct {
+    uint32_t length;
+    uint32_t type;
+    unsigned char value[256];
+} pBBk_entry_data_t;
+
+typedef struct {
+    uint32_t key;
+    uint32_t offset;
+    uint32_t reserved; // 0x000000
+    pBBk_entry_data_t data;
+} pBBk_entry_t;
+
+typedef struct {
     uint32_t magic;
     uint32_t bookmark_size;
     uint32_t unknown; // 0x10040000
@@ -160,16 +173,7 @@ typedef struct {
         uint32_t identifier;
         uint32_t next_toc_offset;
         uint32_t count;
-        struct {
-            uint32_t key;
-            uint32_t offset;
-            uint32_t reserved; // 0x000000
-            struct {
-                uint32_t length;
-                uint32_t type;
-                unsigned char value[256];
-            } data;
-        } entries[256];
+        pBBk_entry_t entries[256];
     } toc[16];
 } pBBk_t;
 
@@ -193,7 +197,9 @@ typedef enum {
 } pBBK_data_type;
 
 AMG_EXPORT AMG_EXTERN pBBk_t ds_record_get_data_as_pBBk(ds_record_t *record);
-AMG_EXPORT AMG_EXTERN CFDictionaryRef _pBBk_record_copy_dictionary(const pBBk_t *);
+AMG_EXPORT AMG_EXTERN CFMutableDictionaryRef _pBBk_entry_data_copy_dictionary(const pBBk_entry_data_t *pbbkEntryData, const pBBk_t *pbbkRecord, const unsigned char *data, size_t len);
+AMG_EXPORT AMG_EXTERN CFDictionaryRef _pBBk_entry_copy_dictionary(const pBBk_entry_t *pbbkEntry, const pBBk_t *pbbkRecord, const unsigned char *data, size_t len);
+AMG_EXPORT AMG_EXTERN CFDictionaryRef _pBBk_record_copy_dictionary(const pBBk_t *, const unsigned char *data, size_t len);
 
 AMG_EXPORT AMG_EXTERN pBBk_t _ds_get_data_as_pBBk(const unsigned char *data, size_t len);
 
